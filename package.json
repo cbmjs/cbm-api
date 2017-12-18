@@ -1,0 +1,37 @@
+{
+  "name": "cbm-api",
+  "version": "1.1.0",
+  "description": "An easy way to connect with CallByMeaning server.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest && codecov"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cbmjs/cbm-api.git"
+  },
+  "author": {
+    "name": "Napoleon-Christos Oikonomou",
+    "email": "napoleonoikon@gmail.com"
+  },
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/cbmjs/cbm-api/issues"
+  },
+  "homepage": "https://github.com/cbmjs/cbm-api#readme",
+  "dependencies": {
+    "natural": "^0.5.4",
+    "request": "^2.83.0",
+    "request-promise": "^4.2.2",
+    "sync-request": "^4.1.0"
+  },
+  "devDependencies": {
+    "codecov": "^3.0.0",
+    "dotenv": "^4.0.0",
+    "jest": "^21.2.1"
+  },
+  "jest": {
+    "coverageDirectory": "./coverage/",
+    "collectCoverage": true
+  }
+}

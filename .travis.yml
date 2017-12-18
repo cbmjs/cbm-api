@@ -1,0 +1,11 @@
+before_install:
+- npm update -g npm
+cache:
+  directories:
+  - node_modules
+language: node_js
+node_js:
+- node
+notifications:
+  email: false
+sudo: false
