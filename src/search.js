@@ -30,15 +30,12 @@ async function search(...args) {
     resolveWithFullResponse: true,
     simple: false,
   });
-  const result = response.body.map((obj) => {
-    const temp = {
-      function: obj.function.split('/').pop(),
-      description: obj.desc,
-    };
-    return temp;
-  });
-  response.body = result;
-  return response;
+  try {
+    const result = response.body.map(obj => Object({ function: obj.function.split('/').pop(), description: obj.desc }));
+    return { body: result, statusCode: response.statusCode };
+  } catch (error) {
+    return { body: response.body, statusCode: response.statusCode };
+  }
 }
 
 module.exports = search;

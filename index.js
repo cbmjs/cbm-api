@@ -14,5 +14,6 @@ CallByMeaning.prototype.search = require('./src/search');
 CallByMeaning.prototype.call = require('./src/call');
 CallByMeaning.prototype.getCode = require('./src/getCode');
 CallByMeaning.prototype.create = require('./src/create');
+CallByMeaning.prototype.ask = require('./src/ask');
 
 module.exports = CallByMeaning;
