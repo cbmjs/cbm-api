@@ -1,4 +1,3 @@
-require('dotenv').load();
 const LUIS = require('../lib/luis');
 
 const luis = LUIS({

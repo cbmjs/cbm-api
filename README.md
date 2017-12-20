@@ -1,4 +1,4 @@
-# cbm-api    [![Build Status](https://travis-ci.org/cbmjs/cbm-api.svg?branch=master)](https://travis-ci.org/cbmjs/cbm-api) [![codecov](https://codecov.io/gh/cbmjs/cbm-api/branch/master/graph/badge.svg)](https://codecov.io/gh/cbmjs/cbm-api) [![npm version](https://badge.fury.io/js/cbm-api.svg)](https://badge.fury.io/js/cbm-api)
+# cbm-api    [![Build Status](https://travis-ci.org/cbmjs/cbm-api.svg?branch=master)](https://travis-ci.org/cbmjs/cbm-api) [![codecov](https://codecov.io/gh/cbmjs/cbm-api/branch/master/graph/badge.svg)](https://codecov.io/gh/cbmjs/cbm-api) [![npm version](https://badge.fury.io/js/%40cbmjs%2Fcbm-api.svg)](https://badge.fury.io/js/%40cbmjs%2Fcbm-api)
 
 Node.js interface to the CallByMeaning network server. For further information, consult the website of the server-side project: [CallByMeaning](https://github.com/cbmjs/CallByMeaning).
 
@@ -7,7 +7,7 @@ Node.js interface to the CallByMeaning network server. For further information, 
 To require the module in a project, we can use the expression:
 
 ```javascript
-const CallByMeaning = require('cbm-api');
+const CallByMeaning = require('@cbmjs/cbm-api');
 ```
 
 ## Getting Started
