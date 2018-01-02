@@ -1,25 +1,25 @@
-const request = require('sync-request');
 const rp = require('request-promise');
 const fs = require('fs');
 const getURI = require('./getURI');
 
-function createNode(params, host) {
+async function createNode(params, host) {
   const path = host.concat('/new/node');
   if (params.name == null) return false;
-  const res = request('post', path, {
+  const res = await rp.post(path, {
     json: {
       name: getURI(params.name),
       desc: params.desc,
       units: [].concat(params.units).map(el => getURI(el)),
     },
+    resolveWithFullResponse: true,
   });
   return res.statusCode === 200;
 }
 
-function createFunction(params, host) {
+async function createFunction(params, host) {
   const path = host.concat('/new/function');
   if (params.name == null) return false;
-  const res = request('post', path, {
+  const res = await rp.post(path, {
     json: {
       name: params.name,
       desc: params.desc,
@@ -28,6 +28,7 @@ function createFunction(params, host) {
       returnsNames: [].concat(params.returnsNames).map(el => getURI(el)),
       returnsUnits: [].concat(params.returnsUnits).map(el => getURI(el)),
     },
+    resolveWithFullResponse: true,
   });
   return res.statusCode === 200;
 }
@@ -58,14 +59,14 @@ async function createAsyncFunction(params, callPath, host) {
     },
     resolveWithFullResponse: true,
   });
-  request('post', callPath, { json: { command: 'fixit' } });
+  await rp.post(callPath, { json: { command: 'fixit' } });
   return res.statusCode === 200;
 }
 
-function createRelation(params, host) {
+async function createRelation(params, host) {
   const path = host.concat('/new/relation');
   if (params.name == null) return false;
-  const res = request('post', path, {
+  const res = await rp.post(path, {
     json: {
       name: params.name,
       desc: params.desc,
@@ -73,6 +74,7 @@ function createRelation(params, host) {
       end: getURI(params.end),
       mathRelation: params.mathRelation,
     },
+    resolveWithFullResponse: true,
   });
   return res.statusCode === 200;
 }
