@@ -60,12 +60,12 @@ cbm.getURI('a (big) dog!'); //-> big_dog
 
 ### `.search(...args)`
 
-This method finds all the functions that correspond to given nodes and returns an array containing them. It can be called with two different ways. Either by providing only an object containing the search parameters or by providing the parameters themselves as arguments. This method is asynchronous and returns a promise that, when fulfilled, returns an object with two properties.`statusCode` which contains the status code of the request and `body` that holds the result set from the query. For a full overview of search parameters, check the [documentation](https://github.com/cbmjs/CallByMeaning/blob/master/docs/GETBYMEANING.md).
+This method finds all the functions that correspond to given concepts and returns an array containing them. It can be called with two different ways. Either by providing only an object containing the search parameters or by providing the parameters themselves as arguments. This method is asynchronous and returns a promise that, when fulfilled, returns an object with two properties.`statusCode` which contains the status code of the request and `body` that holds the result set from the query. For a full overview of search parameters, check the [documentation](https://github.com/cbmjs/CallByMeaning/blob/master/docs/GETBYMEANING.md).
 
 Example code:
 
 ```javascript
-cbm.search({'inputNodes': 'date', 'outputNodes': 'time'}).then((result) => {
+cbm.search({'inputConcepts': 'date', 'outputConcepts': 'time'}).then((result) => {
   if (result.statusCode === 200) console.log('Success!');
   // insert code here
 }).catch((error) => console.error(error));
@@ -86,10 +86,10 @@ Example code:
 const bday = new Date(1994, 2, 24);
 
 cbm.call({
-  'inputNodes': 'date',
+  'inputConcepts': 'date',
   // 'date' doesn't have a unit, so we can omit it, or pass {'inputUnits': null} or {'inputUnits': []} or {'inputUnits: '-'} or {'inputUnits': 'date'}
   'inputVars': bday,
-  'outputNodes': 'time',
+  'outputConcepts': 'time',
   'outputUnits': 'seconds'
 }.then((result) => {
   if (result.statusCode === 200) console.log('Success!');
@@ -114,13 +114,13 @@ getTime();
 
 ## `.create(params[, type])`
 
-This method creates a document in the server if it doesn't exist or modifies it, if it does. It accepts a [params](https://github.com/cbmjs/CallByMeaning/blob/master/docs/MODELS.md) object with the document parameters as its first argument and a string containing the type of the document. It can be one of `node`, `function`, `relation`. If it isn't provided, it defaults to `node`. This method is asynchronous and returns a promise that, when fulfilled, returns a boolean, depending of its success.
+This method creates a document in the server if it doesn't exist or modifies it, if it does. It accepts a [params](https://github.com/cbmjs/CallByMeaning/blob/master/docs/MODELS.md) object with the document parameters as its first argument and a string containing the type of the document. It can be one of `concept`, `function`, `relation`. If it isn't provided, it defaults to `concept`. This method is asynchronous and returns a promise that, when fulfilled, returns a boolean, depending of its success.
 
 Example code:
 
 ```javascript
 let params = {
-  name: 'aNode',
+  name: 'aConcept',
   desc: 'aDescription',
 };
 cbm.create(params);

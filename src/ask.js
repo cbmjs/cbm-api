@@ -9,8 +9,8 @@ const luis = LUIS({
 async function ask(...args) {
   const nargs = args.length;
   const params = {};
-  params.inputNodes = [];
-  params.outputNodes = [];
+  params.inputConcepts = [];
+  params.outputConcepts = [];
 
   if (nargs !== 1) {
     throw new Error('Insufficient input arguments. Must provide a natural language query.');
@@ -24,8 +24,8 @@ async function ask(...args) {
 
   const response = await luis.predict(query);
   for (const entity of response.entities) {
-    if (entity.type === 'inputNodes') params.inputNodes.push(entity.entity);
-    if (entity.type === 'outputNodes') params.outputNodes.push(entity.entity);
+    if (entity.type === 'inputConcepts') params.inputConcepts.push(entity.entity);
+    if (entity.type === 'outputConcepts') params.outputConcepts.push(entity.entity);
   }
   return this.search(params);
 }

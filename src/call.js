@@ -12,27 +12,27 @@ async function call(...args) {
 
   if (nargs < 7) {
     params = args[0];
-    if (params.outputNodes == null) {
+    if (params.outputConcepts == null) {
       args.reverse();
       params = {};
       if (typeof args[0] === 'boolean') {
         returnCode = args[0];
         params.outputUnits = args[1] || [];
-        params.outputNodes = args[2] || [];
+        params.outputConcepts = args[2] || [];
         if (returnCode && nargs < 6) {
           params.inputUnits = args[3] || [];
-          params.inputNodes = args[4] || [];
+          params.inputConcepts = args[4] || [];
         } else {
           params.inputVars = args[3] || [];
           params.inputUnits = args[4] || [];
-          params.inputNodes = args[5] || [];
+          params.inputConcepts = args[5] || [];
         }
       } else {
         params.outputUnits = args[0] || [];
-        params.outputNodes = args[1] || [];
+        params.outputConcepts = args[1] || [];
         params.inputVars = args[2] || [];
         params.inputUnits = args[3] || [];
-        params.inputNodes = args[4] || [];
+        params.inputConcepts = args[4] || [];
       }
     } else {
       returnCode = args[1];

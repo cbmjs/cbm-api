@@ -10,13 +10,13 @@ async function search(...args) {
 
   if (nargs < 3) {
     params = args[0];
-    if (params.outputNodes == null) {
+    if (params.outputConcepts == null) {
       params = {};
       args.reverse();
       params =
         {
-          inputNodes: args[1] || [],
-          outputNodes: args[0] || [],
+          inputConcepts: args[1] || [],
+          outputConcepts: args[0] || [],
         };
     }
   } else {

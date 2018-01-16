@@ -186,7 +186,7 @@ describe('CallByMeaning', () => {
     it('is possible to use search method to find CallByMeaning functions by params object', async () => {
       const cbm = new CallByMeaning(HOST);
       expect.assertions(2);
-      const result = await cbm.search({ outputNodes: 'time' });
+      const result = await cbm.search({ outputConcepts: 'time' });
       expect(result.body[0].description).toEqual('Gets the timestamp of the number of milliseconds that have elapsed since the Unix epoch (1 January 1970 00:00:00 UTC).');
       expect(result.statusCode).toEqual(200);
     });
@@ -213,7 +213,7 @@ describe('CallByMeaning', () => {
 
     it('is possible to retrieve results (params)', async () => {
       const cbm = new CallByMeaning(HOST);
-      const response = await cbm.call({ outputNodes: 'time', outputUnits: 'milliseconds' });
+      const response = await cbm.call({ outputConcepts: 'time', outputUnits: 'milliseconds' });
       expect(response.statusCode).toEqual(200);
     });
 
@@ -231,7 +231,7 @@ describe('CallByMeaning', () => {
 
     it('is possible to retrieve code (params)', async () => {
       const cbm = new CallByMeaning(HOST);
-      const response = await cbm.call({ outputNodes: 'time', outputUnits: 'milliseconds' }, true);
+      const response = await cbm.call({ outputConcepts: 'time', outputUnits: 'milliseconds' }, true);
       expect(response.statusCode).toEqual(200);
     });
 
@@ -244,7 +244,7 @@ describe('CallByMeaning', () => {
     it('is possible to retrieve results with different units', async () => {
       const cbm = new CallByMeaning(HOST);
       expect.assertions(3);
-      const response = await cbm.call({ outputNodes: 'time', outputUnits: 'milliseconds' });
+      const response = await cbm.call({ outputConcepts: 'time', outputUnits: 'milliseconds' });
       const response2 = await cbm.call('time', 'milliseconds');
       expect(response.statusCode).toEqual(response2.statusCode);
       expect(response.statusCode).toEqual(200);
@@ -362,7 +362,7 @@ describe('CallByMeaning', () => {
       }
     });
 
-    it('throws an error if type argument is not one of node, function, relation', () => {
+    it('throws an error if type argument is not one of concept, function, relation', () => {
       const cbm = new CallByMeaning();
       const values = [
         function testt() { },
@@ -382,9 +382,9 @@ describe('CallByMeaning', () => {
       }
     });
 
-    it('creates a single Node', async () => {
+    it('creates a single Concept', async () => {
       const cbm = new CallByMeaning(HOST);
-      const result = await cbm.create({ name: 'Napo', units: 'cool guy' }, 'node');
+      const result = await cbm.create({ name: 'Napo', units: 'cool guy' }, 'concept');
       expect(result).toBeTruthy();
     }, TIMEOUT);
 
@@ -423,19 +423,19 @@ describe('CallByMeaning', () => {
     }, TIMEOUT);
 
 
-    it('creates a single Node if no type specified', async () => {
+    it('creates a single Concept if no type specified', async () => {
       const cbm = new CallByMeaning(HOST);
       const result = await cbm.create({ name: 'Mary' });
       expect(result).toBeTruthy();
     }, TIMEOUT);
 
-    it('returns correctly if it can\'t create the node in the server (with specified type)', async () => {
+    it('returns correctly if it can\'t create the concept in the server (with specified type)', async () => {
       const cbm = new CallByMeaning(HOST);
-      const result = await cbm.create({ desc: 'blabla' }, 'node');
+      const result = await cbm.create({ desc: 'blabla' }, 'concept');
       expect(result).toBeFalsy();
     }, TIMEOUT);
 
-    it('returns correctly if it can\'t create the node in the server (without specified type)', async () => {
+    it('returns correctly if it can\'t create the concept in the server (without specified type)', async () => {
       const cbm = new CallByMeaning(HOST);
       const result = await cbm.create({ desc: 'blabla' });
       expect(result).toBeFalsy();

@@ -2,8 +2,8 @@ const rp = require('request-promise');
 const fs = require('fs');
 const getURI = require('./getURI');
 
-async function createNode(params, host) {
-  const path = host.concat('/new/node');
+async function createConcept(params, host) {
+  const path = host.concat('/new/concept');
   if (params.name == null) return false;
   const res = await rp.post(path, {
     json: {
@@ -92,11 +92,11 @@ async function create(...args) {
   }
 
   if (nargs < 2) {
-    type = 'node';
+    type = 'concept';
   } else {
     type = args[1];
-    if ((!(typeof type === 'string') || (['node', 'function', 'relation'].indexOf(type) === -1))) {
-      throw new TypeError(`Invalid input argument. type argument must be one of 'node', 'function', 'relation'. Value: \`${type}\`.`);
+    if ((!(typeof type === 'string') || (['concept', 'function', 'relation'].indexOf(type) === -1))) {
+      throw new TypeError(`Invalid input argument. type argument must be one of 'concept', 'function', 'relation'. Value: \`${type}\`.`);
     }
   }
 
@@ -105,7 +105,7 @@ async function create(...args) {
     return createAsyncFunction(params, path, this.host);
   }
   let created = false;
-  if (type === 'node') created = createNode(params, this.host);
+  if (type === 'concept') created = createConcept(params, this.host);
   if (type === 'function') created = createFunction(params, this.host);
   if (type === 'relation') created = createRelation(params, this.host);
   await rp.post(path, { json: { command: 'fixit' } });
