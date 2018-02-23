@@ -1,4 +1,4 @@
-const request = require('request-promise');
+const got = require('got');
 const JSON = require('../lib/jsonfn');
 
 async function call(...args) {
@@ -40,14 +40,18 @@ async function call(...args) {
   } else {
     throw new Error('Too many input arguments. Must provide one params object or arguments that correspond to params properties.');
   }
-  const response = await request.post({
-    uri: this.fullAddress_('/cbm/call/'),
-    headers: { returnCode },
-    form: params,
-    json: true,
-    resolveWithFullResponse: true,
-    simple: false,
-  });
+  let response;
+  try {
+    response = await got.post(this.fullAddress_('/cbm/call/'), {
+      encoding: 'utf-8',
+      body: params,
+      form: true,
+      json: true,
+      headers: { returnCode },
+    });
+  } catch (err) {
+    response = err.response;
+  }
   if (returnCode) {
     const result = this.getCode(response.body.function);
     return { body: result, statusCode: response.statusCode };

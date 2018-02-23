@@ -60,5 +60,6 @@ typings/
 .env
 
 ## Additional files
+.eslintignore
 .travis.yml
 codecov.yml

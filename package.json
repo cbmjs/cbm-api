@@ -1,7 +1,7 @@
 {
   "name": "@cbmjs/cbm-api",
-  "version": "1.4.0",
-  "description": "An easy way to connect with CallByMeaning server.",
+  "version": "1.5.0",
+  "description": "An easy way to connect with cbmjs server.",
   "main": "index.js",
   "scripts": {
     "test": "jest && codecov"
@@ -14,15 +14,14 @@
   },
   "homepage": "https://github.com/cbmjs/cbm-api#readme",
   "dependencies": {
-    "natural": "^0.5.6",
-    "request": "^2.83.0",
-    "request-promise": "^4.2.2",
-    "sync-request": "^4.1.0"
+    "form-data": "^2.3.2",
+    "got": "^8.2.0",
+    "natural": "^0.5.6"
   },
   "devDependencies": {
     "codecov": "^3.0.0",
-    "dotenv": "^4.0.0",
-    "jest": "^22.1.1"
+    "dotenv": "^5.0.1",
+    "jest": "^22.4.2"
   },
   "jest": {
     "coverageDirectory": "./coverage/",

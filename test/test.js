@@ -1,19 +1,19 @@
 require('dotenv').load();
-const request = require('sync-request');
+const got = require('got');
 const CallByMeaning = require('../index.js');
 
 const TIMEOUT = 10000;
 const HOST = process.env.HOST || 'https://call-by-meaning.herokuapp.com';
 
-describe('CallByMeaning', () => {
-  afterAll(() => {
+describe('cbm-api', () => {
+  afterAll(async () => {
     const cbm = new CallByMeaning(HOST);
     const path = cbm.host.concat('/new/fix');
-    request('post', path, { json: { command: 'fixtests' } });
-    request('post', path, { json: { command: 'fixit' } });
+    await got('post', path, { body: { command: 'fixtests' }, form: true });
+    await got('post', path, { body: { command: 'fixit' }, form: true });
   });
   describe('Initial config', () => {
-    it('creates an instance of CallByMeaning', () => {
+    it('creates an instance of cbm-api', () => {
       const cbm = new CallByMeaning(HOST);
       expect(cbm).toBeInstanceOf(CallByMeaning);
     });
@@ -165,7 +165,7 @@ describe('CallByMeaning', () => {
       }
     });
 
-    it('looks up the CallByMeaning URI for text', () => {
+    it('looks up the cbmjs URI for text', () => {
       const cbm = new CallByMeaning(HOST);
       const result = cbm.getURI('a big    ,  !!  dog!');
       expect(result).toEqual('big_dog');
@@ -183,7 +183,7 @@ describe('CallByMeaning', () => {
       cbm.search({}, 'a', ['b']).catch(e => expect(e).toBeDefined());
     });
 
-    it('is possible to use search method to find CallByMeaning functions by params object', async () => {
+    it('is possible to use search method to find cbmjs functions by params object', async () => {
       const cbm = new CallByMeaning(HOST);
       expect.assertions(2);
       const result = await cbm.search({ outputConcepts: 'time' });
@@ -191,7 +191,7 @@ describe('CallByMeaning', () => {
       expect(result.statusCode).toEqual(200);
     });
 
-    it('is possible to use search method to find CallByMeaning functions by providing all properties', async () => {
+    it('is possible to use search method to find cbmjs functions by providing all properties', async () => {
       const cbm = new CallByMeaning(HOST);
       expect.assertions(2);
       const result = await cbm.search('time');
@@ -255,7 +255,7 @@ describe('CallByMeaning', () => {
   describe('.getCode()', () => {
     it('throws an error if supplied with more than one argument', () => {
       const cbm = new CallByMeaning();
-      expect(() => cbm.getCode('now.js', 5)).toThrow(Error);
+      cbm.getCode('now.js', 5).catch(e => expect(e).toBeDefined());
     });
 
     it('throws an error if argument is not a string primitive', () => {
@@ -273,19 +273,19 @@ describe('CallByMeaning', () => {
       expect.assertions(values.length);
 
       for (let i = 0; i < values.length; i += 1) {
-        expect(() => cbm.getCode(i)).toThrow(TypeError);
+        cbm.getCode(i).catch(e => expect(e).toBeDefined());
       }
     });
 
-    it('is possible to retrieve code if input is a path', () => {
+    it('is possible to retrieve code if input is a path', async () => {
       const cbm = new CallByMeaning(HOST);
-      const result = cbm.getCode('./js/now.js');
+      const result = await cbm.getCode('./js/now.js');
       expect(result).toEqual(expect.stringContaining('module.exports'));
     });
 
-    it('is possible to retrieve code if input is filename', () => {
+    it('is possible to retrieve code if input is filename', async () => {
       const cbm = new CallByMeaning(HOST);
-      const result = cbm.getCode('now.js');
+      const result = await cbm.getCode('now.js');
       expect(result).toEqual(expect.stringContaining('module.exports'));
     });
   });
@@ -315,7 +315,7 @@ describe('CallByMeaning', () => {
       }
     });
 
-    it('is possible to use ask method to find CallByMeaning functions with outputs only', async () => {
+    it('is possible to use ask method to find cbmjs functions with outputs only', async () => {
       const cbm = new CallByMeaning(HOST);
       expect.assertions(2);
       const result = await cbm.ask('Give me all functions that return time');
@@ -323,7 +323,7 @@ describe('CallByMeaning', () => {
       expect(result.statusCode).toEqual(200);
     });
 
-    it('is possible to use ask method to find CallByMeaning functions with both inputs and outputs', async () => {
+    it('is possible to use ask method to find cbmjs functions with both inputs and outputs', async () => {
       const cbm = new CallByMeaning(HOST);
       expect.assertions(2);
       const result = await cbm.ask('Return all functions that take a date and convert it to time');

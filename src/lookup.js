@@ -1,11 +1,11 @@
-const request = require('request-promise');
+const got = require('got');
 
 async function lookup(...args) {
   const nargs = args.length;
   let type;
 
   if (nargs < 1) {
-    throw new Error('Insufficient input arguments. Must provide a CallByMeaning URI.');
+    throw new Error('Insufficient input arguments. Must provide a cbmjs URI.');
   }
 
   const uri = args[0];
@@ -24,26 +24,22 @@ async function lookup(...args) {
 
   if (type !== 'all') {
     const path = `/gbn/${type}/${String(encodeURIComponent(uri))}`;
-    const response = await request.get({
-      uri: this.fullAddress_(path),
-      json: true,
-      resolveWithFullResponse: true,
-      simple: false,
-    });
-    if (response.statusCode === 200) {
-      let result;
+    const result = {};
+    try {
+      const response = await got(this.fullAddress_(path), { json: true });
       switch (type) {
         case 'c':
-          result = {
+          result.body = {
             name: response.body.name,
             description: response.body.desc,
             units: response.body.units,
             asInput: response.body.func_arg.map(obj => Object({ name: obj.name, unit: obj.unitType })),
             asOutput: response.body.func_res.map(obj => Object({ name: obj.name, unit: obj.unitType })),
           };
+          result.statusCode = response.statusCode;
           break;
         case 'f':
-          result = {
+          result.body = {
             name: response.body.name,
             description: response.body.desc,
             units: response.body.units,
@@ -53,31 +49,29 @@ async function lookup(...args) {
             returnsUnits: response.body.returnsUnits,
             sourceCode: response.body.codeFile,
           };
+          result.statusCode = response.statusCode;
           break;
         case 'r':
-          result = {
+          result.body = {
             name: response.body.name,
             description: response.body.desc,
             connections: response.body.connects.map(obj => Object({ start: obj.start.name, end: obj.end.name, mathRelation: obj.mathRelation })),
           };
+          result.statusCode = response.statusCode;
           break;
         default:
       }
-      return { body: result, statusCode: response.statusCode };
+    } catch (err) {
+      result.body = Object('Couldn\'t find that in DB.'); // keep convention that always an object is returned.
+      result.statusCode = err.response.statusCode;
     }
-    const result = Object('Couldn\'t find that in DB.'); // keep convention that always an object is returned.
-    return { body: result, statusCode: response.statusCode };
+    return result;
   }
   const pathC = this.fullAddress_(`/gbn/c/${String(encodeURIComponent(uri))}`);
   const pathF = this.fullAddress_(`/gbn/f/${String(encodeURIComponent(uri))}`);
   const pathR = this.fullAddress_(`/gbn/r/${String(encodeURIComponent(uri))}`);
-  let response = await request.get({
-    uri: pathC,
-    json: true,
-    resolveWithFullResponse: true,
-    simple: false,
-  });
-  if (response.statusCode === 200) {
+  try {
+    const response = await got(pathC, { json: true });
     const result = {
       name: response.body.name,
       description: response.body.desc,
@@ -86,14 +80,9 @@ async function lookup(...args) {
       asOutput: response.body.func_res.map(obj => Object({ name: obj.name, unit: obj.unitType })),
     };
     return { body: result, statusCode: response.statusCode };
-  }
-  response = await request.get({
-    uri: pathF,
-    json: true,
-    resolveWithFullResponse: true,
-    simple: false,
-  });
-  if (response.statusCode === 200) {
+  } catch (err) { /**/ }
+  try {
+    const response = await got(pathF, { json: true });
     const result = {
       name: response.body.name,
       description: response.body.desc,
@@ -105,23 +94,16 @@ async function lookup(...args) {
       sourceCode: response.body.codeFile,
     };
     return { body: result, statusCode: response.statusCode };
-  }
-  response = await request.get({
-    uri: pathR,
-    json: true,
-    resolveWithFullResponse: true,
-    simple: false,
-  });
-  if (response.statusCode === 200) {
+  } catch (err) { /**/ }
+  try {
+    const response = await got(pathR, { json: true });
     const result = {
       name: response.body.name,
       description: response.body.desc,
       connections: response.body.connects.map(obj => Object({ start: obj.start.name, end: obj.end.name, mathRelation: obj.mathRelation })),
     };
     return { body: result, statusCode: response.statusCode };
-  }
-  const result = Object('Couldn\'t find that in DB.'); // keep convention that always an object is returned.
-  return { body: result, statusCode: response.statusCode };
+  } catch (err) { return { body: Object('Couldn\'t find that in DB.'), statusCode: err.response.statusCode }; }
 }
 
 module.exports = lookup;

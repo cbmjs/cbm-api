@@ -1,6 +1,6 @@
-const request = require('sync-request');
+const got = require('got');
 
-function getCode(...args) {
+async function getCode(...args) {
   const nargs = args.length;
 
   if (nargs !== 1) {
@@ -19,8 +19,8 @@ function getCode(...args) {
     path = codeFile[0] === '_' ? this.fullAddress_(`/js/internal/${codeFile}`) : this.fullAddress_(`/js/${codeFile}`);
   }
 
-  const res = request('get', path);
-  return res.getBody('utf8');
+  const res = await got(path, { encoding: 'utf-8' });
+  return res.body;
 }
 
 module.exports = getCode;

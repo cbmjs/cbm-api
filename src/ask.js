@@ -2,7 +2,7 @@ const LUIS = require('../lib/luis');
 
 const luis = LUIS({
   appId: '98dad933-f92f-4d45-aabc-9f00caa9ffb3',
-  appKey: 'db8b8e252fea46ce9c32a54d9a2068bf',
+  appKey: process.env.LUIS_KEY || 'd21ef49d7fd5482a80cfc8f2ee335176',
   verbose: true,
 });
 
@@ -23,7 +23,7 @@ async function ask(...args) {
   }
 
   const response = await luis.predict(query);
-  for (const entity of response.entities) {
+  for (const entity of response.body.entities) {
     if (entity.type === 'inputConcepts') params.inputConcepts.push(entity.entity);
     if (entity.type === 'outputConcepts') params.outputConcepts.push(entity.entity);
   }

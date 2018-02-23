@@ -1,4 +1,4 @@
-const request = require('request-promise');
+const got = require('got');
 
 async function search(...args) {
   const nargs = args.length;
@@ -22,14 +22,15 @@ async function search(...args) {
   } else {
     throw new Error('Too many input arguments. Must provide one params object or two arrays/strings(input, output) or one array/string(output).');
   }
-
-  const response = await request.post({
-    uri: this.fullAddress_('/gbm/search/'),
-    form: params,
-    json: true,
-    resolveWithFullResponse: true,
-    simple: false,
-  });
+  let response;
+  try {
+    response = await got.post(this.fullAddress_('/gbm/search/'), {
+      encoding: 'utf-8',
+      body: params,
+      form: true,
+      json: true,
+    });
+  } catch (err) { response = err.response; }
   try {
     const result = response.body.map(obj => Object({ function: obj.function.split('/').pop(), description: obj.desc }));
     return { body: result, statusCode: response.statusCode };

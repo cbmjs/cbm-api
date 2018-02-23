@@ -1,36 +1,43 @@
-const rp = require('request-promise');
+const got = require('got');
 const fs = require('fs');
+const FormData = require('form-data');
 const getURI = require('./getURI');
 
 async function createConcept(params, host) {
   const path = host.concat('/new/concept');
   if (params.name == null) return false;
-  const res = await rp.post(path, {
-    json: {
-      name: getURI(params.name),
-      desc: params.desc,
-      units: [].concat(params.units).map(el => getURI(el)),
-    },
-    resolveWithFullResponse: true,
-  });
-  return res.statusCode === 200;
+  try {
+    const res = await got.post(path, {
+      encoding: 'utf-8',
+      body: {
+        name: getURI(params.name),
+        desc: params.desc,
+        units: [].concat(params.units).map(el => getURI(el)),
+      },
+      form: true,
+    });
+    return res.statusCode === 200;
+  } catch (err) { return false; }
 }
 
 async function createFunction(params, host) {
   const path = host.concat('/new/function');
   if (params.name == null) return false;
-  const res = await rp.post(path, {
-    json: {
-      name: params.name,
-      desc: params.desc,
-      argsNames: [].concat(params.argsNames).map(el => getURI(el)),
-      argsUnits: [].concat(params.argsUnits).map(el => getURI(el)),
-      returnsNames: [].concat(params.returnsNames).map(el => getURI(el)),
-      returnsUnits: [].concat(params.returnsUnits).map(el => getURI(el)),
-    },
-    resolveWithFullResponse: true,
-  });
-  return res.statusCode === 200;
+  try {
+    const res = await got.post(path, {
+      encoding: 'utf-8',
+      body: {
+        name: params.name,
+        desc: params.desc,
+        argsNames: [].concat(params.argsNames).map(el => getURI(el)),
+        argsUnits: [].concat(params.argsUnits).map(el => getURI(el)),
+        returnsNames: [].concat(params.returnsNames).map(el => getURI(el)),
+        returnsUnits: [].concat(params.returnsUnits).map(el => getURI(el)),
+      },
+      form: true,
+    });
+    return res.statusCode === 200;
+  } catch (err) { return false; }
 }
 
 async function createAsyncFunction(params, callPath, host) {
@@ -46,37 +53,46 @@ async function createAsyncFunction(params, callPath, host) {
     codeFile: '',
   };
   Object.assign(fullParams, params);
-  const res = await rp.post({
-    uri: path,
-    formData: {
-      name: fullParams.name,
-      desc: fullParams.desc,
-      argsNames: [].concat(fullParams.argsNames).map(el => getURI(el)),
-      argsUnits: [].concat(fullParams.argsUnits).map(el => getURI(el)),
-      returnsNames: [].concat(fullParams.returnsNames).map(el => getURI(el)),
-      returnsUnits: [].concat(fullParams.returnsUnits).map(el => getURI(el)),
-      codeFile: fs.createReadStream(fullParams.codeFile),
-    },
-    resolveWithFullResponse: true,
-  });
-  await rp.post(callPath, { json: { command: 'fixit' } });
-  return res.statusCode === 200;
+  const form = new FormData();
+  form.append('name', fullParams.name);
+  form.append('desc', fullParams.desc);
+  form.append('argsNames', `${[].concat(fullParams.argsNames).map(el => getURI(el))}`);
+  form.append('argsUnits', `${[].concat(fullParams.argsUnits).map(el => getURI(el))}`);
+  form.append('returnsNames', `${[].concat(fullParams.returnsNames).map(el => getURI(el))}`);
+  form.append('returnsUnits', `${[].concat(fullParams.returnsUnits).map(el => getURI(el))}`);
+  form.append('codeFile', fs.createReadStream(fullParams.codeFile));
+
+  try {
+    const res = await got.post(path, {
+      body: form,
+    });
+    await got.post(callPath, {
+      body: {
+        command: 'fixit',
+      },
+      form: true,
+    });
+    return res.statusCode === 200;
+  } catch (err) { return false; }
 }
 
 async function createRelation(params, host) {
   const path = host.concat('/new/relation');
   if (params.name == null) return false;
-  const res = await rp.post(path, {
-    json: {
-      name: params.name,
-      desc: params.desc,
-      start: getURI(params.start),
-      end: getURI(params.end),
-      mathRelation: params.mathRelation,
-    },
-    resolveWithFullResponse: true,
-  });
-  return res.statusCode === 200;
+  try {
+    const res = await got.post(path, {
+      encoding: 'utf-8',
+      body: {
+        name: params.name,
+        desc: params.desc,
+        start: getURI(params.start),
+        end: getURI(params.end),
+        mathRelation: params.mathRelation,
+      },
+      form: true,
+    });
+    return res.statusCode === 200;
+  } catch (err) { return false; }
 }
 
 async function create(...args) {
@@ -108,7 +124,14 @@ async function create(...args) {
   if (type === 'concept') created = createConcept(params, this.host);
   if (type === 'function') created = createFunction(params, this.host);
   if (type === 'relation') created = createRelation(params, this.host);
-  await rp.post(path, { json: { command: 'fixit' } });
+  try {
+    await got.post(path, {
+      body: {
+        command: 'fixit',
+      },
+      form: true,
+    });
+  } catch (error) { /**/ }
   return created;
 }
 

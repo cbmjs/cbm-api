@@ -1,6 +1,6 @@
 # cbm-api    [![Build Status](https://travis-ci.org/cbmjs/cbm-api.svg?branch=master)](https://travis-ci.org/cbmjs/cbm-api) [![codecov](https://codecov.io/gh/cbmjs/cbm-api/branch/master/graph/badge.svg)](https://codecov.io/gh/cbmjs/cbm-api) [![npm version](https://badge.fury.io/js/%40cbmjs%2Fcbm-api.svg)](https://badge.fury.io/js/%40cbmjs%2Fcbm-api)
 
-Node.js interface to the CallByMeaning network server. For further information, consult the website of the server-side project: [CallByMeaning](https://github.com/cbmjs/CallByMeaning).
+Node.js interface to the cbmjs network server. For further information, consult the website of the server-side project: [cbm-engine](https://github.com/cbmjs/cbm-engine).
 
 ## Introduction
 
@@ -18,7 +18,7 @@ The module exports a single constructor which can be used to open an API connect
 const cbm = new CallByMeaning();
 ```
 
-In case that you are running your own copy of the CallByMeaning server, the constructor takes the hostname of the server as an optional argument. The default option evaluates to "[https://call-by-meaning.herokuapp.com](https://call-by-meaning.herokuapp.com/)".
+In case that you are running your own copy of the cbmjs server, the constructor takes the hostname of the server as an optional argument. The default option evaluates to "[https://call-by-meaning.herokuapp.com](https://call-by-meaning.herokuapp.com/)".
 
 ```javascript
 CallByMeaning(host);
@@ -30,13 +30,13 @@ Example:
 const cbm = new CallByMeaning('http://localhost:3000');
 ```
 
-We can then use the following six methods to query the CallByMeaning API:
+We can then use the following six methods to query the cbmjs API:
 
 ## Methods
 
 ### `.lookup(uri[, type])`
 
-This method expects a valid CallByMeaning URI as its first argument.
+This method expects a valid cbmjs URI as its first argument.
 `type` is an (optional) string that specifies the type of the GET request. It can have the keys `c`, `f` or `r`. This method is asynchronous and returns a promise that, when fulfilled, returns an object with two properties.`statusCode` which contains the status code of the request and `body` that holds the result set from the query.
 
 Example code:
@@ -50,7 +50,7 @@ cbm.lookup('time', 'c').then((result) => {
 
 ### `.getURI(text)`
 
-This method finds out what the CallByMeaning URI is for a given text, applying steps such as reducing English words to their root form and removing special characters.
+This method finds out what the cbmjs URI is for a given text, applying steps such as reducing English words to their root form and removing special characters.
 
 Example code:
 
@@ -60,7 +60,7 @@ cbm.getURI('a (big) dog!'); //-> big_dog
 
 ### `.search(...args)`
 
-This method finds all the functions that correspond to given concepts and returns an array containing them. It can be called with two different ways. Either by providing only an object containing the search parameters or by providing the parameters themselves as arguments. This method is asynchronous and returns a promise that, when fulfilled, returns an object with two properties.`statusCode` which contains the status code of the request and `body` that holds the result set from the query. For a full overview of search parameters, check the [documentation](https://github.com/cbmjs/CallByMeaning/blob/master/docs/GETBYMEANING.md).
+This method finds all the functions that correspond to given concepts and returns an array containing them. It can be called with two different ways. Either by providing only an object containing the search parameters or by providing the parameters themselves as arguments. This method is asynchronous and returns a promise that, when fulfilled, returns an object with two properties.`statusCode` which contains the status code of the request and `body` that holds the result set from the query. For a full overview of search parameters, check the [documentation](https://github.com/cbmjs/cbm-engine/blob/master/docs/GETBYMEANING.md).
 
 Example code:
 
@@ -70,7 +70,7 @@ cbm.search({'inputConcepts': 'date', 'outputConcepts': 'time'}).then((result) =>
   // insert code here
 }).catch((error) => console.error(error));
 
-cbm.search('date', 'time'}).then((result) => {
+cbm.search('date', 'time').then((result) => {
   if (result.statusCode === 200) console.log('Success!');
   // insert code here
 }).catch((error) => console.error(error));
@@ -78,7 +78,7 @@ cbm.search('date', 'time'}).then((result) => {
 
 ### `.call(...args)`
 
-This method takes the search parameters and after finding an appropriate function - a function with the same concepts as inputs and outputs, but (maybe) in different units, that is - executes it and returns the result. If the (optional) argument `returnCode` is set to true, it instead returns the .js file's name and the description of the function. It can be called with two different ways. Either by providing only an object containing the search parameters (and maybe the optional returnCode as a second argument) or by providing the parameters themselves as arguments. This method is asynchronous and returns a promise that, when fulfilled, returns an object with two properties.`statusCode` which contains the status code of the request and `body` that holds the result set from the query. For a full overview of search parameters, check the [documentation](https://github.com/cbmjs/CallByMeaning/blob/master/docs/CALLBYMEANING.md).
+This method takes the search parameters and after finding an appropriate function - a function with the same concepts as inputs and outputs, but (maybe) in different units, that is - executes it and returns the result. If the (optional) argument `returnCode` is set to true, it instead returns the .js file's name and the description of the function. It can be called with two different ways. Either by providing only an object containing the search parameters (and maybe the optional returnCode as a second argument) or by providing the parameters themselves as arguments. This method is asynchronous and returns a promise that, when fulfilled, returns an object with two properties.`statusCode` which contains the status code of the request and `body` that holds the result set from the query. For a full overview of search parameters, check the [documentation](https://github.com/cbmjs/cbm-engine/blob/master/docs/CALLBYMEANING.md).
 
 Example code:
 
@@ -91,7 +91,7 @@ cbm.call({
   'inputVars': bday,
   'outputConcepts': 'time',
   'outputUnits': 'seconds'
-}.then((result) => {
+}).then((result) => {
   if (result.statusCode === 200) console.log('Success!');
   // insert code here
 }).catch((error) => console.error(error));
@@ -102,19 +102,21 @@ cbm.call('date', null, 'time', 'seconds', true).then(...); // If we want the sou
 
 ### `.getCode(fileName)`
 
-This method acts as a small helper to the usage of `.search` and `.call` methods. It takes the `name` of a .js file in the server and returns its code in plain text.
+This method acts as a small helper to the usage of `.search` and `.call` methods. It takes the `name` of a .js file in the server and returns its code in plain text.This method is asynchronous and returns a promise that, when fulfilled, returns a string containing the code.
 
 Example code:
 
 ```javascript
-let code = cbm.getCode('getTime.js');
-const getTime = eval(code);
-getTime();
+cbm.getCode('getTime.js').then(code => {
+  const getTime = eval(code);
+  getTime();
+});
+
 ```
 
 ## `.create(params[, type])`
 
-This method creates a document in the server if it doesn't exist or modifies it, if it does. It accepts a [params](https://github.com/cbmjs/CallByMeaning/blob/master/docs/MODELS.md) object with the document parameters as its first argument and a string containing the type of the document. It can be one of `concept`, `function`, `relation`. If it isn't provided, it defaults to `concept`. This method is asynchronous and returns a promise that, when fulfilled, returns a boolean, depending of its success.
+This method creates a document in the server if it doesn't exist or modifies it, if it does. It accepts a [params](https://github.com/cbmjs/cbm-engine/blob/master/docs/MODELS.md) object with the document parameters as its first argument and a string containing the type of the document. It can be one of `concept`, `function`, `relation`. If it isn't provided, it defaults to `concept`. This method is asynchronous and returns a promise that, when fulfilled, returns a boolean, depending of its success.
 
 Example code:
 
