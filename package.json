@@ -1,21 +1,32 @@
 {
   "name": "@cbmjs/cbm-api",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "An easy way to connect with cbmjs server.",
   "main": "index.js",
   "scripts": {
-    "test": "jest && codecov"
+    "test": "jest"
   },
-  "repository": "cbmjs/cbm-api",
-  "author": "Napoleon-Christos Oikonomou <napoleonoikon@gmail.com>",
+  "repository": "github:cbmjs/cbm-api",
+  "author": {
+    "name": "Napoleon-Christos Oikonomou",
+    "email": "Napoleonoikon@gmail.com",
+    "url": "https://iamnapo.me"
+  },
   "license": "AGPL-3.0",
   "bugs": {
     "url": "https://github.com/cbmjs/cbm-api/issues"
   },
   "homepage": "https://github.com/cbmjs/cbm-api#readme",
+  "jest": {
+    "coverageDirectory": "./coverage/",
+    "collectCoverage": true
+  },
+  "engines": {
+    "node": ">=9"
+  },
   "dependencies": {
     "form-data": "^2.3.2",
-    "got": "^8.2.0",
+    "got": "^8.3.0",
     "natural": "^0.5.6"
   },
   "devDependencies": {
@@ -23,12 +34,7 @@
     "dotenv": "^5.0.1",
     "jest": "^22.4.2"
   },
-  "jest": {
-    "coverageDirectory": "./coverage/",
-    "collectCoverage": true
-  },
   "directories": {
-    "lib": "lib",
-    "test": "test"
+    "lib": "lib"
   }
 }

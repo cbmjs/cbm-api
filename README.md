@@ -1,6 +1,8 @@
-# cbm-api    [![Build Status](https://travis-ci.org/cbmjs/cbm-api.svg?branch=master)](https://travis-ci.org/cbmjs/cbm-api) [![codecov](https://codecov.io/gh/cbmjs/cbm-api/branch/master/graph/badge.svg)](https://codecov.io/gh/cbmjs/cbm-api) [![npm version](https://badge.fury.io/js/%40cbmjs%2Fcbm-api.svg)](https://badge.fury.io/js/%40cbmjs%2Fcbm-api)
+# cbm-api
 
-Node.js interface to the cbmjs network server. For further information, consult the website of the server-side project: [cbm-engine](https://github.com/cbmjs/cbm-engine).
+> Node.js interface to the cbmjs network server. For further information, consult the website of the server-side project: [cbm-engine](https://github.com/cbmjs/cbm-engine).
+
+[![Travis](https://img.shields.io/travis/cbmjs/cbm-api.svg?style=flat-square&label=Travis+CI&logo=travis)](https://travis-ci.org/cbmjs/cbm-api) [![codecov](https://img.shields.io/codecov/c/github/cbmjs/cbm-api.svg?style=flat-square)](https://codecov.io/gh/cbmjs/cbm-api) [![npm](https://img.shields.io/npm/v/@cbmjs/cbm-api.svg?style=flat-square)](https://www.npmjs.com/package/cbmjs/cbm-api) [![license](https://img.shields.io/github/license/cbmjs/cbm-api.svg?style=flat-square)](https://github.com/cbmjs/cbm-api/blob/master/LICENSE)
 
 ## Introduction
 
@@ -164,4 +166,4 @@ Run tests via the command `npm test`
 
 ## License
 
-[AGPL-3.0 license](./LICENSE).
+AGPL-3.0 © [Napoleon-Christos Oikonomou](https://iamnapo.me)

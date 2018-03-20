@@ -1,11 +1,17 @@
-before_install:
-- npm update -g npm
-cache:
-  directories:
-  - node_modules
+sudo: false
+os:
+  - linux
+  - osx
 language: node_js
 node_js:
-- node
+  - node
+cache:
+  directories:
+    - ~/.yarn-cache
+    - node_modules
 notifications:
   email: false
-sudo: false
+before_install:
+  - npm i -g npm
+after_success:
+  - node_modules/.bin/codecov
