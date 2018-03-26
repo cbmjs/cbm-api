@@ -2,7 +2,7 @@ const LUIS = require('../lib/luis');
 
 const luis = LUIS({
   appId: '98dad933-f92f-4d45-aabc-9f00caa9ffb3',
-  appKey: process.env.LUIS_KEY || 'd21ef49d7fd5482a80cfc8f2ee335176',
+  appKey: process.env.LUIS_KEY || 'eb958580c4704aca9e3739d7753f5458',
   verbose: true,
 });
 
