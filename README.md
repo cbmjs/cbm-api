@@ -1,7 +1,5 @@
 # cbm-api
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/cbmjs/cbm-api.svg)](https://greenkeeper.io/)
-
 > Node.js interface to the cbmjs network server. For further information, consult the website of the server-side project: [cbm-engine](https://github.com/cbmjs/cbm-engine).
 
 [![Travis](https://img.shields.io/travis/cbmjs/cbm-api.svg?style=flat-square&label=Travis+CI&logo=travis)](https://travis-ci.org/cbmjs/cbm-api) [![codecov](https://img.shields.io/codecov/c/github/cbmjs/cbm-api.svg?style=flat-square)](https://codecov.io/gh/cbmjs/cbm-api) [![npm](https://img.shields.io/npm/v/@cbmjs/cbm-api.svg?style=flat-square)](https://www.npmjs.com/package/cbmjs/cbm-api) [![license](https://img.shields.io/github/license/cbmjs/cbm-api.svg?style=flat-square)](https://github.com/cbmjs/cbm-api/blob/master/LICENSE)
