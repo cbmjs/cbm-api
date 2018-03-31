@@ -1,10 +1,10 @@
 {
   "name": "@cbmjs/cbm-api",
-  "version": "1.5.3",
+  "version": "1.5.4",
   "description": "An easy way to connect with cbmjs server.",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "eslint . && jest"
   },
   "repository": "github:cbmjs/cbm-api",
   "author": {
@@ -32,6 +32,12 @@
   "devDependencies": {
     "codecov": "^3.0.0",
     "dotenv": "^5.0.1",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-import": "^2.10.0",
+    "eslint-plugin-jest": "^21.15.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.7.0",
     "jest": "^22.4.3"
   },
   "directories": {

@@ -1,11 +1,11 @@
 class CallByMeaning {
-  constructor(host) {
-    this.host = 'https://call-by-meaning.herokuapp.com';
-    if (host) this.host = String(host);
-  }
-  fullAddress_(path) {
-    return this.host.concat(path);
-  }
+	constructor(host) {
+		this.host = 'https://call-by-meaning.herokuapp.com';
+		if (host) this.host = String(host);
+	}
+	fullAddress_(path) {
+		return this.host.concat(path);
+	}
 }
 
 CallByMeaning.prototype.lookup = require('./src/lookup');
