@@ -1,6 +1,6 @@
 {
   "name": "@cbmjs/cbm-api",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "description": "An easy way to connect with cbmjs server.",
   "main": "index.js",
   "scripts": {
