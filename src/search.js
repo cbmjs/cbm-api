@@ -9,14 +9,14 @@ async function search(...args) {
 	}
 
 	if (nargs < 3) {
-		params = args[0];
-		if (params.outputConcepts == null) {
+		[params] = args;
+		if (!params.outputConcepts) {
 			params = {};
 			args.reverse();
 			params =
 			{
 				inputConcepts: args[1] || [],
-				outputConcepts: args[0] || [],
+				outputConcepts: args[0] || []
 			};
 		}
 	} else {
@@ -28,14 +28,16 @@ async function search(...args) {
 			encoding: 'utf-8',
 			body: params,
 			form: true,
-			json: true,
+			json: true
 		});
-	} catch (err) { response = err.response; }
+	} catch (err) {
+		({response} = err);
+	}
 	try {
-		const result = response.body.map(obj => Object({ function: obj.function.split('/').pop(), description: obj.desc }));
-		return { body: result, statusCode: response.statusCode };
+		const result = response.body.map(obj => ({function: obj.function.split('/').pop(), description: obj.desc}));
+		return {body: result, statusCode: response.statusCode};
 	} catch (error) {
-		return { body: response.body, statusCode: response.statusCode };
+		return {body: response.body, statusCode: response.statusCode};
 	}
 }
 

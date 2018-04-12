@@ -1,29 +1,27 @@
+import test from 'ava';
+
 require('dotenv').load();
-const CallByMeaning = require('../index.js');
+
+const CallByMeaning = require('..');
 
 const HOST = process.env.HOST || 'https://call-by-meaning.herokuapp.com';
 
-describe('Initial config', () => {
-	it('creates an instance of cbm-api', () => {
-		const cbm = new CallByMeaning(HOST);
-		expect(cbm).toBeInstanceOf(CallByMeaning);
-	});
+test('creates an instance of cbm-api', t => {
+	const cbm = new CallByMeaning(HOST);
+	t.true(cbm instanceof CallByMeaning);
+});
 
-	it('can\'t be invoked without new', () => {
-		expect(() => CallByMeaning(HOST)).toThrow(TypeError);
-	});
+test('can\'t be invoked without new', t => {
+	/* eslint-disable-next-line new-cap */
+	t.throws(() => CallByMeaning(HOST));
+});
 
-	describe('defaults', () => {
-		it('has default hostname', () => {
-			const cbm = new CallByMeaning();
-			expect(cbm.host).toEqual('https://call-by-meaning.herokuapp.com');
-		});
-	});
+test('has default hostname', t => {
+	const cbm = new CallByMeaning();
+	t.is(cbm.host, 'https://call-by-meaning.herokuapp.com');
+});
 
-	describe('override', () => {
-		it('has set hostname', () => {
-			const cbm = new CallByMeaning('10.0.0.1');
-			expect(cbm.host).toEqual('10.0.0.1');
-		});
-	});
+test('has set hostname', t => {
+	const cbm = new CallByMeaning('10.0.0.1');
+	t.is(cbm.host, '10.0.0.1');
 });

@@ -1,128 +1,129 @@
+import test from 'ava';
+
 require('dotenv').load();
 const got = require('got');
-const CallByMeaning = require('../index.js');
+const CallByMeaning = require('..');
 
-const TIMEOUT = 10000;
 const HOST = process.env.HOST || 'https://call-by-meaning.herokuapp.com';
 
-describe('.create()', () => {
-	afterAll(async () => {
-		const cbm = new CallByMeaning(HOST);
-		const path = cbm.host.concat('/new/fix');
-		await got.post(path, { body: { command: 'fixtests' }, form: true });
-		await got.post(path, { body: { command: 'fixit' }, form: true });
-	});
-	it('throws an error if not supplied at least one argument', () => {
-		const cbm = new CallByMeaning(HOST);
-		cbm.create().catch(e => expect(e).toBeDefined());
-	});
+test.after.always(async () => {
+	const cbm = new CallByMeaning(HOST);
+	const path = cbm.host.concat('/new/fix');
+	await got.post(path, {body: {command: 'fixtests'}, form: true});
+	await got.post(path, {body: {command: 'fixit'}, form: true});
+});
 
-	it('throws an error if params argument is not an object', () => {
-		const cbm = new CallByMeaning(HOST);
-		const values = [
-			function testt() { },
-			5,
-			true,
-			undefined,
-			NaN,
-			'test',
-		];
+test('throws an error if not supplied at least one argument', async t => {
+	const cbm = new CallByMeaning(HOST);
+	await t.throws(cbm.create());
+});
 
-		expect.assertions(values.length);
+test('throws an error if params argument is not an object', async t => {
+	const cbm = new CallByMeaning(HOST);
+	const values = [
+		() => {},
+		5,
+		true,
+		undefined,
+		NaN,
+		'test'
+	];
 
-		for (let i = 0; i < values.length; i += 1) {
-			cbm.create('time').catch(e => expect(e).toBeDefined());
-		}
-	});
+	t.plan(values.length);
+	const tests = [];
+	for (const i of values) {
+		tests.push(t.throws(cbm.create(i)));
+	}
+	await Promise.all(tests);
+});
 
-	it('throws an error if type argument is not one of concept, function, relation', () => {
-		const cbm = new CallByMeaning();
-		const values = [
-			function testt() { },
-			'5',
-			5,
-			true,
-			undefined,
-			null,
-			NaN, [],
-			{},
-		];
+test('throws an error if type argument is not one of concept, function, relation', async t => {
+	const cbm = new CallByMeaning();
+	const values = [
+		() => {},
+		'5',
+		5,
+		true,
+		undefined,
+		null,
+		NaN, [],
+		{}
+	];
 
-		expect.assertions(values.length);
+	t.plan(values.length);
+	const tests = [];
+	for (const i of values) {
+		tests.push(t.throws(cbm.create({name: 'Napo'}, i)));
+	}
+	await Promise.all(tests);
+});
 
-		for (let i = 0; i < values.length; i += 1) {
-			cbm.create({ name: 'Napo' }, values[i]).catch(e => expect(e).toBeDefined());
-		}
-	});
+test('creates a single Concept', async t => {
+	const cbm = new CallByMeaning(HOST);
+	const result = await cbm.create({name: 'Napo', units: 'cool guy'}, 'concept');
+	t.true(result);
+});
 
-	it('creates a single Concept', async () => {
-		const cbm = new CallByMeaning(HOST);
-		const result = await cbm.create({ name: 'Napo', units: 'cool guy' }, 'concept');
-		expect(result).toBeTruthy();
-	}, TIMEOUT);
+test('creates a single Function', async t => {
+	const cbm = new CallByMeaning(HOST);
+	const result = await cbm.create({
+		name: 'testFunc', argsNames: 'Napo', argsUnits: 'napo', returnsNames: 'nApo', returnsUnits: 'naPo'
+	}, 'function');
+	t.true(result);
+});
 
-	it('creates a single Function', async () => {
-		const cbm = new CallByMeaning(HOST);
-		const result = await cbm.create({
-			name: 'testFunc', argsNames: 'Napo', argsUnits: 'napo', returnsNames: 'nApo', returnsUnits: 'naPo',
-		}, 'function');
-		expect(result).toBeTruthy();
-	}, TIMEOUT);
+test('creates a single async Function with existing file', async t => {
+	const cbm = new CallByMeaning(HOST);
+	const result = await cbm.create({
+		name: 'jsonfn', argsNames: 'Napo', argsUnits: 'napo', returnsNames: 'nApo', returnsUnits: 'naPo', codeFile: __dirname.concat('/../lib/jsonfn.js')
+	}, 'function');
+	t.true(result);
+});
 
-	it('creates a single async Function with existing file', async () => {
-		const cbm = new CallByMeaning(HOST);
-		const result = await cbm.create({
-			name: 'jsonfn', argsNames: 'Napo', argsUnits: 'napo', returnsNames: 'nApo', returnsUnits: 'naPo', codeFile: __dirname.concat('/../lib/jsonfn.js'),
-		}, 'function');
-		expect(result).toBeTruthy();
-	}, TIMEOUT);
+test('create a single async Function with existing file but not name returns correctly', async t => {
+	const cbm = new CallByMeaning(HOST);
+	const result = await cbm.create({codeFile: __dirname.concat('/../lib/jsonfn.js')}, 'function');
+	t.false(result);
+});
 
-	it('create a single async Function with existing file but not name returns correctly', async () => {
-		const cbm = new CallByMeaning(HOST);
-		const result = await cbm.create({ codeFile: __dirname.concat('/../lib/jsonfn.js') }, 'function');
-		expect(result).toBeFalsy();
-	}, TIMEOUT);
+test('creates a single Function with non-existing file', async t => {
+	const cbm = new CallByMeaning(HOST);
+	const result = await cbm.create({name: 'jsonfn'}, 'function');
+	t.true(result);
+});
 
-	it('creates a single Function with non-existing file', async () => {
-		const cbm = new CallByMeaning(HOST);
-		const result = await cbm.create({ name: 'jsonfn' }, 'function');
-		expect(result).toBeTruthy();
-	}, TIMEOUT);
+test('creates a single Relation', async t => {
+	const cbm = new CallByMeaning(HOST);
+	const result = await cbm.create({name: 'testRel'}, 'relation');
+	t.true(result);
+});
 
-	it('creates a single Relation', async () => {
-		const cbm = new CallByMeaning(HOST);
-		const result = await cbm.create({ name: 'testRel' }, 'relation');
-		expect(result).toBeTruthy();
-	}, TIMEOUT);
+test('creates a single Concept if no type specified', async t => {
+	const cbm = new CallByMeaning(HOST);
+	const result = await cbm.create({name: 'Mary'});
+	t.true(result);
+});
 
+test('returns correctly if test can\'t create the concept in the server (with specified type)', async t => {
+	const cbm = new CallByMeaning(HOST);
+	const result = await cbm.create({desc: 'blabla'}, 'concept');
+	t.false(result);
+});
 
-	it('creates a single Concept if no type specified', async () => {
-		const cbm = new CallByMeaning(HOST);
-		const result = await cbm.create({ name: 'Mary' });
-		expect(result).toBeTruthy();
-	}, TIMEOUT);
+test('returns correctly if test can\'t create the concept in the server (without specified type)', async t => {
+	const cbm = new CallByMeaning(HOST);
+	const result = await cbm.create({desc: 'blabla'});
+	t.false(result);
+});
 
-	it('returns correctly if it can\'t create the concept in the server (with specified type)', async () => {
-		const cbm = new CallByMeaning(HOST);
-		const result = await cbm.create({ desc: 'blabla' }, 'concept');
-		expect(result).toBeFalsy();
-	}, TIMEOUT);
+test('returns correctly if test can\'t create the function in the server', async t => {
+	const cbm = new CallByMeaning(HOST);
+	const result = await cbm.create({desc: 'blabla'}, 'function');
+	t.false(result);
+});
 
-	it('returns correctly if it can\'t create the concept in the server (without specified type)', async () => {
-		const cbm = new CallByMeaning(HOST);
-		const result = await cbm.create({ desc: 'blabla' });
-		expect(result).toBeFalsy();
-	}, TIMEOUT);
-
-	it('returns correctly if it can\'t create the function in the server', async () => {
-		const cbm = new CallByMeaning(HOST);
-		const result = await cbm.create({ desc: 'blabla' }, 'function');
-		expect(result).toBeFalsy();
-	}, TIMEOUT);
-
-	it('returns correctly if it can\'t create the relation in the server', async () => {
-		const cbm = new CallByMeaning(HOST);
-		const result = await cbm.create({ desc: 'blabla' }, 'relation');
-		expect(result).toBeFalsy();
-	}, TIMEOUT);
+test('returns correctly if test can\'t create the relation in the server', async t => {
+	const cbm = new CallByMeaning(HOST);
+	const result = await cbm.create({desc: 'blabla'}, 'relation');
+	t.false(result);
 });

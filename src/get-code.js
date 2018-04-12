@@ -7,7 +7,7 @@ async function getCode(...args) {
 		throw new Error('Insufficient input arguments. Must provide only a Javascript filename.');
 	}
 
-	const codeFile = args[0];
+	const [codeFile] = args;
 	if (!(typeof codeFile === 'string')) {
 		throw new TypeError(`Invalid input argument. First argument must be a string primitive. Value: \`${codeFile}\`.`);
 	}
@@ -19,7 +19,7 @@ async function getCode(...args) {
 		path = codeFile[0] === '_' ? this.fullAddress_(`/js/internal/${codeFile}`) : this.fullAddress_(`/js/${codeFile}`);
 	}
 
-	const res = await got(path, { encoding: 'utf-8' });
+	const res = await got(path, {encoding: 'utf-8'});
 	return res.body;
 }
 

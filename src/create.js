@@ -1,28 +1,34 @@
-const got = require('got');
 const fs = require('fs');
+const got = require('got');
 const FormData = require('form-data');
-const getURI = require('./getURI');
+const getURI = require('./get-uri');
 
 async function createConcept(params, host) {
 	const path = host.concat('/new/concept');
-	if (params.name == null) return false;
+	if (!params.name) {
+		return false;
+	}
 	try {
 		const res = await got.post(path, {
 			encoding: 'utf-8',
 			body: {
 				name: getURI(params.name),
 				desc: params.desc,
-				units: [].concat(params.units).map(el => getURI(el)),
+				units: [].concat(params.units).map(el => getURI(el))
 			},
-			form: true,
+			form: true
 		});
 		return res.statusCode === 200;
-	} catch (err) { return false; }
+	} catch (err) {
+		return false;
+	}
 }
 
 async function createFunction(params, host) {
 	const path = host.concat('/new/function');
-	if (params.name == null) return false;
+	if (!params.name) {
+		return false;
+	}
 	try {
 		const res = await got.post(path, {
 			encoding: 'utf-8',
@@ -32,17 +38,21 @@ async function createFunction(params, host) {
 				argsNames: [].concat(params.argsNames).map(el => getURI(el)),
 				argsUnits: [].concat(params.argsUnits).map(el => getURI(el)),
 				returnsNames: [].concat(params.returnsNames).map(el => getURI(el)),
-				returnsUnits: [].concat(params.returnsUnits).map(el => getURI(el)),
+				returnsUnits: [].concat(params.returnsUnits).map(el => getURI(el))
 			},
-			form: true,
+			form: true
 		});
 		return res.statusCode === 200;
-	} catch (err) { return false; }
+	} catch (err) {
+		return false;
+	}
 }
 
 async function createAsyncFunction(params, callPath, host) {
 	const path = host.concat('/new/function');
-	if (params.name == null) return false;
+	if (!params.name) {
+		return false;
+	}
 	const fullParams = {
 		name: '',
 		desc: '',
@@ -50,7 +60,7 @@ async function createAsyncFunction(params, callPath, host) {
 		argsUnits: [],
 		returnsNames: [],
 		returnsUnits: [],
-		codeFile: '',
+		codeFile: ''
 	};
 	Object.assign(fullParams, params);
 	const form = new FormData();
@@ -64,21 +74,25 @@ async function createAsyncFunction(params, callPath, host) {
 
 	try {
 		const res = await got.post(path, {
-			body: form,
+			body: form
 		});
 		await got.post(callPath, {
 			body: {
-				command: 'fixit',
+				command: 'fixit'
 			},
-			form: true,
+			form: true
 		});
 		return res.statusCode === 200;
-	} catch (err) { return false; }
+	} catch (err) {
+		return false;
+	}
 }
 
 async function createRelation(params, host) {
 	const path = host.concat('/new/relation');
-	if (params.name == null) return false;
+	if (!params.name) {
+		return false;
+	}
 	try {
 		const res = await got.post(path, {
 			encoding: 'utf-8',
@@ -87,12 +101,14 @@ async function createRelation(params, host) {
 				desc: params.desc,
 				start: getURI(params.start),
 				end: getURI(params.end),
-				mathRelation: params.mathRelation,
+				mathRelation: params.mathRelation
 			},
-			form: true,
+			form: true
 		});
 		return res.statusCode === 200;
-	} catch (err) { return false; }
+	} catch (err) {
+		return false;
+	}
 }
 
 async function create(...args) {
@@ -102,34 +118,40 @@ async function create(...args) {
 	if (nargs < 1) {
 		throw new Error('Insufficient input arguments. Must provide a params object.');
 	}
-	const params = args[0];
-	if (typeof params !== 'object' || params == null) {
+	const [params] = args;
+	if (typeof params !== 'object' || !params) {
 		throw new TypeError('Invalid input argument. Argument must be an object.');
 	}
 
 	if (nargs < 2) {
 		type = 'concept';
 	} else {
-		type = args[1];
+		[, type] = args;
 		if ((!(typeof type === 'string') || (['concept', 'function', 'relation'].indexOf(type) === -1))) {
 			throw new TypeError(`Invalid input argument. type argument must be one of 'concept', 'function', 'relation'. Value: \`${type}\`.`);
 		}
 	}
 
 	const path = this.host.concat('/new/fix');
-	if (!(params.codeFile == null || params.codeFile.length === 0)) {
+	if (!(!params.codeFile || params.codeFile.length === 0)) {
 		return createAsyncFunction(params, path, this.host);
 	}
 	let created = false;
-	if (type === 'concept') created = createConcept(params, this.host);
-	if (type === 'function') created = createFunction(params, this.host);
-	if (type === 'relation') created = createRelation(params, this.host);
+	if (type === 'concept') {
+		created = createConcept(params, this.host);
+	}
+	if (type === 'function') {
+		created = createFunction(params, this.host);
+	}
+	if (type === 'relation') {
+		created = createRelation(params, this.host);
+	}
 	try {
 		await got.post(path, {
 			body: {
-				command: 'fixit',
+				command: 'fixit'
 			},
-			form: true,
+			form: true
 		});
 	} catch (error) { /**/ }
 	return created;

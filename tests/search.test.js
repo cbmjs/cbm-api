@@ -1,32 +1,32 @@
+import test from 'ava';
+
 require('dotenv').load();
-const CallByMeaning = require('../index.js');
+const CallByMeaning = require('..');
 
 const HOST = process.env.HOST || 'https://call-by-meaning.herokuapp.com';
 
-describe('.search()', () => {
-	it('throws an error if not supplied at least one argument', () => {
-		const cbm = new CallByMeaning(HOST);
-		cbm.search().catch(e => expect(e).toBeDefined());
-	});
+test('throws an error if not supplied at least one argument', async t => {
+	const cbm = new CallByMeaning(HOST);
+	await t.throws(cbm.search());
+});
 
-	it('throws an error if supplied with too many arguments', () => {
-		const cbm = new CallByMeaning(HOST);
-		cbm.search({}, 'a', ['b']).catch(e => expect(e).toBeDefined());
-	});
+test('throws an error if supplied with too many arguments', async t => {
+	const cbm = new CallByMeaning(HOST);
+	await t.throws(cbm.search({}, 'a', ['b']));
+});
 
-	it('is possible to use search method to find cbmjs functions by params object', async () => {
-		const cbm = new CallByMeaning(HOST);
-		expect.assertions(2);
-		const result = await cbm.search({ outputConcepts: 'time' });
-		expect(result.body[0].description).toEqual('Gets the timestamp of the number of milliseconds that have elapsed since the Unix epoch (1 January 1970 00:00:00 UTC).');
-		expect(result.statusCode).toEqual(200);
-	});
+test('is possible to use search method to find cbmjs functions by params object', async t => {
+	const cbm = new CallByMeaning(HOST);
+	t.plan(2);
+	const result = await cbm.search({outputConcepts: 'time'});
+	t.is(result.body[0].description, 'Gets the timestamp of the number of milliseconds that have elapsed since the Unix epoch (1 January 1970 00:00:00 UTC).');
+	t.is(result.statusCode, 200);
+});
 
-	it('is possible to use search method to find cbmjs functions by providing all properties', async () => {
-		const cbm = new CallByMeaning(HOST);
-		expect.assertions(2);
-		const result = await cbm.search('time');
-		expect(result.body[0].description).toEqual('Gets the timestamp of the number of milliseconds that have elapsed since the Unix epoch (1 January 1970 00:00:00 UTC).');
-		expect(result.statusCode).toEqual(200);
-	});
+test('is possible to use search method to find cbmjs functions by providing all properties', async t => {
+	const cbm = new CallByMeaning(HOST);
+	t.plan(2);
+	const result = await cbm.search('time');
+	t.is(result.body[0].description, 'Gets the timestamp of the number of milliseconds that have elapsed since the Unix epoch (1 January 1970 00:00:00 UTC).');
+	t.is(result.statusCode, 200);
 });

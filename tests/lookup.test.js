@@ -1,107 +1,108 @@
+import test from 'ava';
+
 require('dotenv').load();
-const CallByMeaning = require('../index.js');
+const CallByMeaning = require('..');
 
 const HOST = process.env.HOST || 'https://call-by-meaning.herokuapp.com';
 
-describe('.lookup()', () => {
-	it('throws an error if not supplied at least one argument', () => {
-		expect.assertions(1);
-		const cbm = new CallByMeaning(HOST);
-		return cbm.lookup().catch(e => expect(e).toBeDefined());
-	});
+test('throws an error if not supplied at least one argument', async t => {
+	const cbm = new CallByMeaning(HOST);
+	await t.throws(cbm.lookup());
+});
 
-	it('throws an error if URI argument is not a string primitive', () => {
-		const cbm = new CallByMeaning(HOST);
-		const values = [
-			function testt() {},
-			5,
-			true,
-			undefined,
-			null,
-			NaN, [],
-			{},
-		];
+test('throws an error if URI argument is not a string primitive', async t => {
+	const cbm = new CallByMeaning(HOST);
+	const values = [
+		() => {},
+		5,
+		true,
+		undefined,
+		null,
+		NaN, [],
+		{}
+	];
 
-		expect.assertions(values.length);
+	t.plan(values.length);
+	const tests = [];
+	for (const i of values) {
+		tests.push(t.throws(cbm.lookup(i)));
+	}
+	await Promise.all(tests);
+});
 
-		for (let i = 0; i < values.length; i += 1) {
-			cbm.lookup(values[i]).catch(e => expect(e).toBeDefined());
-		}
-	});
+test('throws an error if type argument is not one of c, f, r', async t => {
+	const cbm = new CallByMeaning(HOST);
+	const values = [
+		() => {},
+		'5',
+		5,
+		true,
+		undefined,
+		null,
+		NaN, []
+	];
 
-	it('throws an error if type argument is not one of c, f, r', () => {
-		const cbm = new CallByMeaning(HOST);
-		const values = [
-			function testt() {},
-			'5',
-			5,
-			true,
-			undefined,
-			null,
-			NaN, [],
-		];
+	t.plan(values.length);
+	const tests = [];
+	for (const i of values) {
+		tests.push(t.throws(cbm.lookup('time', i)));
+	}
+	await Promise.all(tests);
+});
 
-		expect.assertions(values.length);
+test('looks up a single concept', async t => {
+	const cbm = new CallByMeaning(HOST);
+	const response = await cbm.lookup('string', 'c');
+	t.is(response.statusCode, 200);
+});
 
-		for (let i = 0; i < values.length; i += 1) {
-			cbm.lookup('time', values[i]).catch(e => expect(e).toBeDefined());
-		}
-	});
+test('looks up a single function', async t => {
+	const cbm = new CallByMeaning(HOST);
+	const response = await cbm.lookup('add', 'f');
+	t.is(response.statusCode, 200);
+});
 
-	it('looks up a single concept', async () => {
-		const cbm = new CallByMeaning(HOST);
-		const response = await cbm.lookup('string', 'c');
-		expect(response.statusCode).toEqual(200);
-	});
+test('looks up a single relation', async t => {
+	const cbm = new CallByMeaning(HOST);
+	const response = await cbm.lookup('unitConversion', 'r');
+	t.is(response.statusCode, 200);
+});
 
-	it('looks up a single function', async () => {
-		const cbm = new CallByMeaning(HOST);
-		const response = await cbm.lookup('add', 'f');
-		expect(response.statusCode).toEqual(200);
-	});
+test('looks up a single concept without specified \'c\' type', async t => {
+	const cbm = new CallByMeaning(HOST);
+	const response = await cbm.lookup('function');
+	t.is(response.statusCode, 200);
+});
 
-	it('looks up a single relation', async () => {
-		const cbm = new CallByMeaning(HOST);
-		const response = await cbm.lookup('unitConversion', 'r');
-		expect(response.statusCode).toEqual(200);
-	});
+test('looks up a single function without specified \'f\' type', async t => {
+	const cbm = new CallByMeaning(HOST);
+	const response = await cbm.lookup('now');
+	t.is(response.statusCode, 200);
+});
 
-	it('looks up a single concept without specified \'c\' type', async () => {
-		const cbm = new CallByMeaning(HOST);
-		const response = await cbm.lookup('function');
-		expect(response.statusCode).toEqual(200);
-	});
+test('looks up a single relation without specified \'r\' type', async t => {
+	const cbm = new CallByMeaning(HOST);
+	const response = await cbm.lookup('unitConversion');
+	t.is(response.statusCode, 200);
+});
 
-	it('looks up a single function without specified \'f\' type', async () => {
-		const cbm = new CallByMeaning(HOST);
-		const response = await cbm.lookup('now');
-		expect(response.statusCode).toEqual(200);
-	});
+test('returns correctly if test can\'t find the object in the server (with specified type)', async t => {
+	const cbm = new CallByMeaning();
+	t.plan(6);
+	let response = await cbm.lookup('blabla', 'c');
+	t.is(response.statusCode, 418);
+	t.true(response.body instanceof Object);
+	response = await cbm.lookup('blabla', 'f');
+	t.is(response.statusCode, 418);
+	t.true(response.body instanceof Object);
+	response = await cbm.lookup('blabla', 'r');
+	t.is(response.statusCode, 418);
+	t.true(response.body instanceof Object);
+});
 
-	it('looks up a single relation without specified \'r\' type', async () => {
-		const cbm = new CallByMeaning(HOST);
-		const response = await cbm.lookup('unitConversion');
-		expect(response.statusCode).toEqual(200);
-	});
-
-	it('returns correctly if it can\'t find the object in the server (with specified type)', async () => {
-		const cbm = new CallByMeaning();
-		expect.assertions(6);
-		let response = await cbm.lookup('blabla', 'c');
-		expect(response.statusCode).toEqual(418);
-		expect(response.body).toBeInstanceOf(Object);
-		response = await cbm.lookup('blabla', 'f');
-		expect(response.statusCode).toEqual(418);
-		expect(response.body).toBeInstanceOf(Object);
-		response = await cbm.lookup('blabla', 'r');
-		expect(response.statusCode).toEqual(418);
-		expect(response.body).toBeInstanceOf(Object);
-	});
-
-	it('returns correctly if it can\'t find the object in the server (without specified type)', async () => {
-		const cbm = new CallByMeaning();
-		const response = await cbm.lookup('blabla');
-		expect(response.statusCode).toEqual(418);
-		expect(response.body).toBeInstanceOf(Object);
-	});
+test('returns correctly if test can\'t find the object in the server (without specified type)', async t => {
+	const cbm = new CallByMeaning();
+	const response = await cbm.lookup('blabla');
+	t.is(response.statusCode, 418);
+	t.true(response.body instanceof Object);
 });

@@ -8,7 +8,7 @@ async function lookup(...args) {
 		throw new Error('Insufficient input arguments. Must provide a cbmjs URI.');
 	}
 
-	const uri = args[0];
+	const [uri] = args;
 	if (!(typeof uri === 'string')) {
 		throw new TypeError(`Invalid input argument. First argument must be a string primitive. Value: \`${uri}\`.`);
 	}
@@ -16,7 +16,7 @@ async function lookup(...args) {
 	if (nargs < 2) {
 		type = 'all';
 	} else {
-		type = args[1];
+		[, type] = args;
 		if ((!(typeof uri === 'string') || (['c', 'f', 'r'].indexOf(type) === -1))) {
 			throw new TypeError(`Invalid input argument. type argument must be one of 'c', 'f', 'r'. Value: \`${type}\`.`);
 		}
@@ -26,43 +26,43 @@ async function lookup(...args) {
 		const path = `/gbn/${type}/${String(encodeURIComponent(uri))}`;
 		const result = {};
 		try {
-			const response = await got(this.fullAddress_(path), { json: true });
+			const response = await got(this.fullAddress_(path), {json: true});
 			switch (type) {
-			case 'c':
-				result.body = {
-					name: response.body.name,
-					description: response.body.desc,
-					units: response.body.units,
-					asInput: response.body.func_arg.map(obj => Object({ name: obj.name, unit: obj.unitType })),
-					asOutput: response.body.func_res.map(obj => Object({ name: obj.name, unit: obj.unitType })),
-				};
-				result.statusCode = response.statusCode;
-				break;
-			case 'f':
-				result.body = {
-					name: response.body.name,
-					description: response.body.desc,
-					units: response.body.units,
-					argsNames: response.body.argsNames,
-					argsUnits: response.body.argsUnits,
-					returnsNames: response.body.returnsNames,
-					returnsUnits: response.body.returnsUnits,
-					sourceCode: response.body.codeFile,
-				};
-				result.statusCode = response.statusCode;
-				break;
-			case 'r':
-				result.body = {
-					name: response.body.name,
-					description: response.body.desc,
-					connections: response.body.connects.map(obj => Object({ start: obj.start.name, end: obj.end.name, mathRelation: obj.mathRelation })),
-				};
-				result.statusCode = response.statusCode;
-				break;
-			default:
+				case 'c':
+					result.body = {
+						name: response.body.name,
+						description: response.body.desc,
+						units: response.body.units,
+						asInput: response.body.func_arg.map(obj => ({name: obj.name, unit: obj.unitType})),
+						asOutput: response.body.func_res.map(obj => ({name: obj.name, unit: obj.unitType}))
+					};
+					result.statusCode = response.statusCode;
+					break;
+				case 'f':
+					result.body = {
+						name: response.body.name,
+						description: response.body.desc,
+						units: response.body.units,
+						argsNames: response.body.argsNames,
+						argsUnits: response.body.argsUnits,
+						returnsNames: response.body.returnsNames,
+						returnsUnits: response.body.returnsUnits,
+						sourceCode: response.body.codeFile
+					};
+					result.statusCode = response.statusCode;
+					break;
+				case 'r':
+					result.body = {
+						name: response.body.name,
+						description: response.body.desc,
+						connections: response.body.connects.map(obj => ({start: obj.start.name, end: obj.end.name, mathRelation: obj.mathRelation}))
+					};
+					result.statusCode = response.statusCode;
+					break;
+				default:
 			}
 		} catch (err) {
-			result.body = Object('Couldn\'t find that in DB.'); // keep convention that always an object is returned.
+			result.body = {String: 'Couldn\'t find that in DB.'}; // Keep convention that always an object is returned.
 			result.statusCode = err.response.statusCode;
 		}
 		return result;
@@ -71,18 +71,18 @@ async function lookup(...args) {
 	const pathF = this.fullAddress_(`/gbn/f/${String(encodeURIComponent(uri))}`);
 	const pathR = this.fullAddress_(`/gbn/r/${String(encodeURIComponent(uri))}`);
 	try {
-		const response = await got(pathC, { json: true });
+		const response = await got(pathC, {json: true});
 		const result = {
 			name: response.body.name,
 			description: response.body.desc,
 			units: response.body.units,
-			asInput: response.body.func_arg.map(obj => Object({ name: obj.name, unit: obj.unitType })),
-			asOutput: response.body.func_res.map(obj => Object({ name: obj.name, unit: obj.unitType })),
+			asInput: response.body.func_arg.map(obj => ({name: obj.name, unit: obj.unitType})),
+			asOutput: response.body.func_res.map(obj => ({name: obj.name, unit: obj.unitType}))
 		};
-		return { body: result, statusCode: response.statusCode };
+		return {body: result, statusCode: response.statusCode};
 	} catch (err) { /**/ }
 	try {
-		const response = await got(pathF, { json: true });
+		const response = await got(pathF, {json: true});
 		const result = {
 			name: response.body.name,
 			description: response.body.desc,
@@ -91,19 +91,21 @@ async function lookup(...args) {
 			argsUnits: response.body.argsUnits,
 			returnsNames: response.body.returnsNames,
 			returnsUnits: response.body.returnsUnits,
-			sourceCode: response.body.codeFile,
+			sourceCode: response.body.codeFile
 		};
-		return { body: result, statusCode: response.statusCode };
+		return {body: result, statusCode: response.statusCode};
 	} catch (err) { /**/ }
 	try {
-		const response = await got(pathR, { json: true });
+		const response = await got(pathR, {json: true});
 		const result = {
 			name: response.body.name,
 			description: response.body.desc,
-			connections: response.body.connects.map(obj => Object({ start: obj.start.name, end: obj.end.name, mathRelation: obj.mathRelation })),
+			connections: response.body.connects.map(obj => ({start: obj.start.name, end: obj.end.name, mathRelation: obj.mathRelation}))
 		};
-		return { body: result, statusCode: response.statusCode };
-	} catch (err) { return { body: Object('Couldn\'t find that in DB.'), statusCode: err.response.statusCode }; }
+		return {body: result, statusCode: response.statusCode};
+	} catch (err) {
+		return {body: {String: 'Couldn\'t find that in DB.'}, statusCode: err.response.statusCode};
+	}
 }
 
 module.exports = lookup;

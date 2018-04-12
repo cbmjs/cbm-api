@@ -162,8 +162,6 @@ cbm.create(params, 'relation')
 
 Run tests via the command `npm test`
 
----
-
 ## License
 
 AGPL-3.0 © [Napoleon-Christos Oikonomou](https://iamnapo.me)

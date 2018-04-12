@@ -6,12 +6,10 @@ language: node_js
 node_js:
   - node
 cache:
+  yarn: true
   directories:
-    - ~/.yarn-cache
     - node_modules
 notifications:
   email: false
-before_install:
-  - npm i -g npm
 after_success:
-  - codecov
+  - nyc report --reporter=text-lcov > coverage.lcov && codecov
