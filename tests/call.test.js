@@ -1,3 +1,4 @@
+/* eslint-disable prefer-reflect */
 import test from 'ava';
 
 require('dotenv').load();
