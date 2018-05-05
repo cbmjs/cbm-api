@@ -27,10 +27,10 @@ async function ask(...args) {
 	const response = await luis.predict(query);
 	for (const entity of response.body.entities) {
 		if (entity.type === 'inputConcepts') {
-params.inputConcepts.push(entity.entity);
+			params.inputConcepts.push(entity.entity);
 		}
 		if (entity.type === 'outputConcepts') {
-params.outputConcepts.push(entity.entity);
+			params.outputConcepts.push(entity.entity);
 		}
 	}
 	return this.search(params);
