@@ -46,7 +46,8 @@ test('throws an error if type argument is not one of concept, function, relation
 		true,
 		undefined,
 		null,
-		NaN, [],
+		NaN,
+		[],
 		{}
 	];
 

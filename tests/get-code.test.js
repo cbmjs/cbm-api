@@ -18,7 +18,8 @@ test('throws an error if argument is not a string primitive', async t => {
 		true,
 		undefined,
 		null,
-		NaN, [],
+		NaN,
+		[],
 		{}
 	];
 

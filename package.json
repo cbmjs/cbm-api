@@ -23,13 +23,13 @@
   "dependencies": {
     "form-data": "^2.3.2",
     "got": "^9.0.0",
-    "natural": "^0.6.0"
+    "natural": "^0.6.1"
   },
   "devDependencies": {
     "ava": "^0.25.0",
-    "codecov": "^3.0.1",
+    "codecov": "^3.0.4",
     "dotenv": "^6.0.0",
-    "nyc": "^12.0.1",
+    "nyc": "^12.0.2",
     "xo": "^0.22.0"
   },
   "directories": {
