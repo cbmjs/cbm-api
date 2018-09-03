@@ -19,7 +19,7 @@ async function createConcept(params, host) {
 			form: true
 		});
 		return res.statusCode === 200;
-	} catch (err) {
+	} catch (error) {
 		return false;
 	}
 }
@@ -43,7 +43,7 @@ async function createFunction(params, host) {
 			form: true
 		});
 		return res.statusCode === 200;
-	} catch (err) {
+	} catch (error) {
 		return false;
 	}
 }
@@ -83,7 +83,7 @@ async function createAsyncFunction(params, callPath, host) {
 			form: true
 		});
 		return res.statusCode === 200;
-	} catch (err) {
+	} catch (error) {
 		return false;
 	}
 }
@@ -106,7 +106,7 @@ async function createRelation(params, host) {
 			form: true
 		});
 		return res.statusCode === 200;
-	} catch (err) {
+	} catch (error) {
 		return false;
 	}
 }
