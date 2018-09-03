@@ -61,9 +61,9 @@ async function lookup(...args) {
 					break;
 				default:
 			}
-		} catch (err) {
+		} catch (error) {
 			result.body = {String: 'Couldn\'t find that in DB.'}; // Keep convention that always an object is returned.
-			result.statusCode = err.response.statusCode;
+			result.statusCode = error.response.statusCode;
 		}
 		return result;
 	}
@@ -80,7 +80,7 @@ async function lookup(...args) {
 			asOutput: response.body.func_res.map(obj => ({name: obj.name, unit: obj.unitType}))
 		};
 		return {body: result, statusCode: response.statusCode};
-	} catch (err) { /**/ }
+	} catch (error) { /**/ }
 	try {
 		const response = await got(pathF, {json: true});
 		const result = {
@@ -94,7 +94,7 @@ async function lookup(...args) {
 			sourceCode: response.body.codeFile
 		};
 		return {body: result, statusCode: response.statusCode};
-	} catch (err) { /**/ }
+	} catch (error) { /**/ }
 	try {
 		const response = await got(pathR, {json: true});
 		const result = {
@@ -103,8 +103,8 @@ async function lookup(...args) {
 			connections: response.body.connects.map(obj => ({start: obj.start.name, end: obj.end.name, mathRelation: obj.mathRelation}))
 		};
 		return {body: result, statusCode: response.statusCode};
-	} catch (err) {
-		return {body: {String: 'Couldn\'t find that in DB.'}, statusCode: err.response.statusCode};
+	} catch (error) {
+		return {body: {String: 'Couldn\'t find that in DB.'}, statusCode: error.response.statusCode};
 	}
 }
 

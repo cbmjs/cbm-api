@@ -30,8 +30,8 @@ async function search(...args) {
 			form: true,
 			json: true
 		});
-	} catch (err) {
-		({response} = err);
+	} catch (error) {
+		({response} = error);
 	}
 	try {
 		const result = response.body.map(obj => ({function: obj.function.split('/').pop(), description: obj.desc}));

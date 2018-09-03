@@ -50,21 +50,21 @@ async function call(...args) {
 			json: true,
 			headers: {returnCode}
 		});
-	} catch (err) {
-		({response} = err);
+	} catch (error) {
+		({response} = error);
 	}
 	if (returnCode) {
 		try {
 			const result = await this.getCode(response.body.function);
 			return {body: result, statusCode: response.statusCode};
-		} catch (err) {
-			return {body: err.response, statusCode: response.statusCode};
+		} catch (error) {
+			return {body: error.response, statusCode: response.statusCode};
 		}
 	}
 	let result = response.body;
 	try {
 		result = JSON.parse(response.body);
-	} catch (e) { /**/ }
+	} catch (error) { /**/ }
 	return {body: result, statusCode: response.statusCode};
 }
 
