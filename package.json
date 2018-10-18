@@ -21,7 +21,7 @@
     "node": ">=9"
   },
   "dependencies": {
-    "form-data": "^2.3.2",
+    "form-data": "^2.3.3",
     "got": "^9.2.0",
     "natural": "^0.6.1"
   },
