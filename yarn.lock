@@ -3316,9 +3316,9 @@ natural-compare@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/natural-compare/-/natural-compare-1.4.0.tgz#4abebfeed7541f2c27acfb29bdbbd15c8d5ba4f7"
 
-natural@^0.6.1:
-  version "0.6.1"
-  resolved "https://registry.yarnpkg.com/natural/-/natural-0.6.1.tgz#2307bf04f17201286aea14630a08f7d7fbc2d060"
+natural@^0.6.2:
+  version "0.6.2"
+  resolved "https://registry.yarnpkg.com/natural/-/natural-0.6.2.tgz#4f372d0d18d9a833986637f06c603247b36fb2e3"
   dependencies:
     afinn-165 "^1.0.2"
     apparatus "^0.0.10"
