@@ -26,7 +26,7 @@
     "natural": "^0.6.2"
   },
   "devDependencies": {
-    "ava": "^0.25.0",
+    "ava": "^1.0.1",
     "codecov": "^3.0.4",
     "dotenv": "^6.1.0",
     "nyc": "^13.1.0",
