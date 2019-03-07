@@ -1485,9 +1485,9 @@ eslint-config-airbnb@^17.1.0:
     object.entries "^1.0.4"
 
 eslint-config-iamnapo@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/eslint-config-iamnapo/-/eslint-config-iamnapo-1.0.1.tgz#6d9e2e4431a6d337afec76bcc9e776c3e066f505"
-  integrity sha512-U6/A45hnOdwHdHnLSrKuHAUC0sfiLaYKFEuzK2lY86sHTlH2TOYn67JwOZyIBshLdIEhSuYbZlD/yh/lTOkLcw==
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/eslint-config-iamnapo/-/eslint-config-iamnapo-1.0.2.tgz#f73259ba5b78bcae160ce1dc9b729695a3497f2f"
+  integrity sha512-ji4OhSnLCVy2fSYt0L0ypg6Oa3I7JyUTta0VyNsUACRgL83t6sQqi4VxKWdpIAPR3lybEffD/arnXlyagqTkvA==
 
 eslint-import-resolver-node@^0.3.2:
   version "0.3.2"
