@@ -1,7 +1,6 @@
-/* eslint-disable prefer-reflect */
 import test from 'ava';
 
-require('dotenv').load();
+require('dotenv').config();
 const CallByMeaning = require('..');
 
 const HOST = process.env.HOST || 'https://call-by-meaning.herokuapp.com';

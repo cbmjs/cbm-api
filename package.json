@@ -1,7 +1,7 @@
 {
   "name": "@cbmjs/cbm-api",
   "version": "1.6.1",
-  "description": "An easy way to connect with cbmjs server.",
+  "description": "An easy way to connect with the cbmjs server.",
   "main": "index.js",
   "scripts": {
     "test": "eslint . && nyc ava"
@@ -22,21 +22,21 @@
   },
   "dependencies": {
     "form-data": "^2.3.3",
-    "got": "^9.5.0",
-    "natural": "^0.6.2"
+    "got": "^9.6.0",
+    "natural": "^0.6.3"
   },
   "devDependencies": {
-    "ava": "^1.0.1",
+    "ava": "^1.3.1",
     "babel-eslint": "^10.0.1",
-    "codecov": "^3.1.0",
-    "dotenv": "^6.2.0",
-    "eslint": "^5.10.0",
+    "codecov": "^3.2.0",
+    "dotenv": "^7.0.0",
+    "eslint": "^5.15.1",
     "eslint-config-airbnb": "^17.1.0",
-    "eslint-config-iamnapo": "^1.0.1",
-    "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-jsx-a11y": "^6.1.2",
-    "eslint-plugin-react": "^7.11.1",
-    "nyc": "^13.1.0"
+    "eslint-config-iamnapo": "^1.0.2",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-react": "^7.12.4",
+    "nyc": "^13.3.0"
   },
   "directories": {
     "lib": "lib"
