@@ -2,23 +2,23 @@
   "name": "@cbmjs/cbm-api",
   "version": "1.6.1",
   "description": "An easy way to connect with the cbmjs server.",
-  "main": "index.js",
-  "scripts": {
-    "test": "eslint . && nyc ava"
+  "homepage": "https://github.com/cbmjs/cbm-api#readme",
+  "bugs": {
+    "url": "https://github.com/cbmjs/cbm-api/issues"
   },
   "repository": "github:cbmjs/cbm-api",
+  "license": "AGPL-3.0",
   "author": {
     "name": "Napoleon-Christos Oikonomou",
     "email": "Napoleonoikon@gmail.com",
     "url": "https://iamnapo.me"
   },
-  "license": "AGPL-3.0",
-  "bugs": {
-    "url": "https://github.com/cbmjs/cbm-api/issues"
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
   },
-  "homepage": "https://github.com/cbmjs/cbm-api#readme",
-  "engines": {
-    "node": ">=9"
+  "scripts": {
+    "test": "eslint . && nyc ava"
   },
   "dependencies": {
     "form-data": "^2.3.3",
@@ -38,7 +38,7 @@
     "eslint-plugin-react": "^7.13.0",
     "nyc": "^14.1.1"
   },
-  "directories": {
-    "lib": "lib"
+  "engines": {
+    "node": ">=10"
   }
 }
