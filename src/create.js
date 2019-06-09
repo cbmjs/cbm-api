@@ -10,13 +10,12 @@ async function createConcept(params, host) {
   }
   try {
     const res = await got.post(path, {
-      encoding: 'utf-8',
       body: {
         name: getURI(params.name),
         desc: params.desc,
         units: [].concat(params.units).map(el => getURI(el)),
       },
-      form: true,
+      json: true,
     });
     return res.statusCode === 200;
   } catch (error) {
@@ -31,7 +30,6 @@ async function createFunction(params, host) {
   }
   try {
     const res = await got.post(path, {
-      encoding: 'utf-8',
       body: {
         name: params.name,
         desc: params.desc,
@@ -40,7 +38,7 @@ async function createFunction(params, host) {
         returnsNames: [].concat(params.returnsNames).map(el => getURI(el)),
         returnsUnits: [].concat(params.returnsUnits).map(el => getURI(el)),
       },
-      form: true,
+      json: true,
     });
     return res.statusCode === 200;
   } catch (error) {
@@ -74,10 +72,7 @@ async function createAsyncFunction(params, callPath, host) {
 
   try {
     const res = await got.post(path, { body: form });
-    await got.post(callPath, {
-      body: { command: 'fixit' },
-      form: true,
-    });
+    await got.post(callPath, { body: { command: 'fixit' }, json: true });
     return res.statusCode === 200;
   } catch (error) {
     return false;
@@ -91,7 +86,6 @@ async function createRelation(params, host) {
   }
   try {
     const res = await got.post(path, {
-      encoding: 'utf-8',
       body: {
         name: params.name,
         desc: params.desc,
@@ -99,7 +93,7 @@ async function createRelation(params, host) {
         end: getURI(params.end),
         mathRelation: params.mathRelation,
       },
-      form: true,
+      json: true,
     });
     return res.statusCode === 200;
   } catch (error) {
@@ -143,10 +137,7 @@ async function create(...args) {
     created = createRelation(params, this.host);
   }
   try {
-    await got.post(path, {
-      body: { command: 'fixit' },
-      form: true,
-    });
+    await got.post(path, { body: { command: 'fixit' }, json: true });
   } catch (error) { /**/ }
   return created;
 }

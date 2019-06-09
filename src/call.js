@@ -43,13 +43,7 @@ async function call(...args) {
 
   let response;
   try {
-    response = await got.post(this.fullAddress_('/cbm/call/'), {
-      encoding: 'utf-8',
-      body: params,
-      form: true,
-      json: true,
-      headers: { returnCode },
-    });
+    response = await got.post(this.fullAddress_('/cbm/call/'), { body: params, json: true, headers: { returnCode } });
   } catch (error) {
     ({ response } = error);
   }

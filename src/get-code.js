@@ -19,7 +19,7 @@ async function getCode(...args) {
     path = codeFile[0] === '_' ? this.fullAddress_(`/js/internal/${codeFile}`) : this.fullAddress_(`/js/${codeFile}`);
   }
 
-  const res = await got(path, { encoding: 'utf-8' });
+  const res = await got(path);
   return res.body;
 }
 
