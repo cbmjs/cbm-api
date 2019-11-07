@@ -1,5 +1,5 @@
-const got = require('got');
-const JSON = require('../lib/jsonfn');
+const got = require("got");
+const JSON = require("../lib/jsonfn");
 
 async function call(...args) {
   const nargs = args.length;
@@ -7,11 +7,11 @@ async function call(...args) {
   let returnCode = false;
 
   if (nargs < 1) {
-    throw new Error('Insufficient input arguments. Must provide a params object.');
+    throw new Error("Insufficient input arguments. Must provide a params object.");
   }
 
   if (nargs > 6) {
-    throw new Error('Too many input arguments. Must provide one params object or arguments that correspond to params properties.');
+    throw new Error("Too many input arguments. Must provide one params object or arguments that correspond to params properties.");
   }
 
   [params] = args;
@@ -20,7 +20,7 @@ async function call(...args) {
   } else {
     args.reverse();
     params = {};
-    if (typeof args[0] === 'boolean') {
+    if (typeof args[0] === "boolean") {
       [returnCode] = args;
       params.outputUnits = args[1] || [];
       params.outputConcepts = args[2] || [];
@@ -43,7 +43,7 @@ async function call(...args) {
 
   let response;
   try {
-    response = await got.post(this.fullAddress_('/cbm/call/'), {
+    response = await got.post(this.fullAddress_("/cbm/call/"), {
       body: params,
       json: true,
       headers: { returnCode, accept: null } });

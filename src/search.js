@@ -1,11 +1,11 @@
-const got = require('got');
+const got = require("got");
 
 async function search(...args) {
   const nargs = args.length;
   let params;
 
   if (nargs < 1) {
-    throw new Error('Insufficient input arguments. Must provide a params object.');
+    throw new Error("Insufficient input arguments. Must provide a params object.");
   }
 
   if (nargs < 3) {
@@ -19,16 +19,16 @@ async function search(...args) {
       };
     }
   } else {
-    throw new Error('Too many input arguments. Must provide one params object or two arrays/strings(input, output) or one array/string(output).');
+    throw new Error("Too many input arguments. Must provide one params object or two arrays/strings(input, output) or one array/string(output).");
   }
   let response;
   try {
-    response = await got.post(this.fullAddress_('/gbm/search/'), { body: params, json: true, headers: { accept: null } });
+    response = await got.post(this.fullAddress_("/gbm/search/"), { body: params, json: true, headers: { accept: null } });
   } catch (error) {
     ({ response } = error);
   }
   try {
-    const result = response.body.map(obj => ({ function: obj.function.split('/').pop(), description: obj.desc }));
+    const result = response.body.map((obj) => ({ function: obj.function.split("/").pop(), description: obj.desc }));
     return { body: result, statusCode: response.statusCode };
   } catch (error) {
     return { body: response.body, statusCode: response.statusCode };

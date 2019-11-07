@@ -1,4 +1,4 @@
-const natural = require('natural');
+const natural = require("natural");
 
 const tokenizer = new natural.WordTokenizer();
 
@@ -9,16 +9,16 @@ function getURI(...args) {
     return args[0];
   }
   if (nargs !== 1) {
-    throw new Error('Invalid input arguments. Must provide only an input text.');
+    throw new Error("Invalid input arguments. Must provide only an input text.");
   }
   [text] = args;
-  if (!(typeof text === 'string')) {
+  if (!(typeof text === "string")) {
     throw new TypeError(`Invalid input argument. Argument must be a string primitive. Value: \`${text}\`.`);
   }
-  text = text.replace(/[^\w\d\s]/g, '');
+  text = text.replace(/[^\w\d\s]/g, "");
   let stemmed = tokenizer.tokenize(text);
-  stemmed = stemmed.filter(item => (item !== 'a') && (item !== 'the') && (item !== 'an'));
-  return stemmed.join('_');
+  stemmed = stemmed.filter((item) => (item !== "a") && (item !== "the") && (item !== "an"));
+  return stemmed.join("_");
 }
 
 module.exports = getURI;
