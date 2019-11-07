@@ -21,7 +21,7 @@
     "test": "eslint . && nyc ava"
   },
   "dependencies": {
-    "form-data": "^2.3.3",
+    "form-data": "^3.0.0",
     "got": "^9.6.0",
     "natural": "^0.6.3"
   },
