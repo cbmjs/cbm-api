@@ -1,44 +1,45 @@
 {
-  "name": "@cbmjs/cbm-api",
-  "version": "1.7.2",
-  "description": "An easy way to connect with the cbmjs server.",
-  "homepage": "https://github.com/cbmjs/cbm-api#readme",
-  "bugs": {
-    "url": "https://github.com/cbmjs/cbm-api/issues"
-  },
-  "repository": "github:cbmjs/cbm-api",
-  "license": "AGPL-3.0",
-  "author": {
-    "name": "Napoleon-Christos Oikonomou",
-    "email": "Napoleonoikon@gmail.com",
-    "url": "https://iamnapo.me"
-  },
-  "main": "index.js",
-  "directories": {
-    "lib": "lib"
-  },
-  "scripts": {
-    "test": "eslint . && nyc ava"
-  },
-  "dependencies": {
-    "form-data": "^3.0.0",
-    "got": "^9.6.0",
-    "natural": "^0.6.3"
-  },
-  "devDependencies": {
-    "ava": "^2.4.0",
-    "codecov": "^3.6.1",
-    "dotenv": "^8.2.0",
-    "eslint": "^6.6.0",
-    "eslint-config-airbnb": "^18.0.1",
-    "eslint-config-iamnapo": "^1.3.3",
-    "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-react": "^7.16.0",
-    "eslint-plugin-react-hooks": "^2.2.0",
-    "nyc": "^14.1.1"
-  },
-  "engines": {
-    "node": ">=10"
-  }
+	"name": "@cbmjs/cbm-api",
+	"version": "1.7.2",
+	"description": "An easy way to connect with the cbmjs server.",
+	"homepage": "https://github.com/cbmjs/cbm-api#readme",
+	"bugs": {
+		"url": "https://github.com/cbmjs/cbm-api/issues"
+	},
+	"repository": "github:cbmjs/cbm-api",
+	"license": "AGPL-3.0",
+	"author": {
+		"name": "Napoleon-Christos Oikonomou",
+		"email": "Napoleonoikon@gmail.com",
+		"url": "https://iamnapo.me"
+	},
+	"main": "index.js",
+	"directories": {
+		"lib": "lib"
+	},
+	"scripts": {
+		"lint": "eslint .",
+		"test": "npm run lint && nyc ava"
+	},
+	"dependencies": {
+		"form-data": "^3.0.0",
+		"got": "^9.6.0",
+		"natural": "^0.6.3"
+	},
+	"devDependencies": {
+		"ava": "^2.4.0",
+		"codecov": "^3.6.1",
+		"dotenv": "^8.2.0",
+		"eslint": "^6.6.0",
+		"eslint-config-airbnb": "^18.0.1",
+		"eslint-config-iamnapo": "^2.0.1",
+		"eslint-plugin-import": "^2.18.2",
+		"eslint-plugin-jsx-a11y": "^6.2.3",
+		"eslint-plugin-react": "^7.16.0",
+		"eslint-plugin-react-hooks": "^2.2.0",
+		"nyc": "^14.1.1"
+	},
+	"engines": {
+		"node": ">=10"
+	}
 }

@@ -9,14 +9,14 @@
 To require the module in a project, we can use the expression:
 
 ```javascript
-const CallByMeaning = require('@cbmjs/cbm-api');
+const CallByMeaning = require("@cbmjs/cbm-api");
 ```
 
 ## Getting Started
 
 The module exports a single constructor which can be used to open an API connection. Simply call it and store the expression result in a variable:
 
-``` javascript
+```javascript
 const cbm = new CallByMeaning();
 ```
 
@@ -29,7 +29,7 @@ CallByMeaning(host);
 Example:
 
 ```javascript
-const cbm = new CallByMeaning('http://localhost:3000');
+const cbm = new CallByMeaning("http://localhost:3000");
 ```
 
 We can then use the following six methods to query the cbmjs API:
@@ -44,10 +44,13 @@ This method expects a valid cbmjs URI as its first argument.
 Example code:
 
 ```javascript
-cbm.lookup('time', 'c').then((result) => {
-  if (result.statusCode === 200) console.log('Success!');
-  // insert code here
-}).catch((error) => console.error(error));
+cbm
+	.lookup("time", "c")
+	.then(result => {
+		if (result.statusCode === 200) console.log("Success!");
+		// insert code here
+	})
+	.catch(error => console.error(error));
 ```
 
 ### `.getURI(text)`
@@ -57,7 +60,7 @@ This method finds out what the cbmjs URI is for a given text, applying steps suc
 Example code:
 
 ```javascript
-cbm.getURI('a (big) dog!'); //-> big_dog
+cbm.getURI("a (big) dog!"); //-> big_dog
 ```
 
 ### `.search(...args)`
@@ -67,15 +70,21 @@ This method finds all the functions that correspond to given concepts and return
 Example code:
 
 ```javascript
-cbm.search({'inputConcepts': 'date', 'outputConcepts': 'time'}).then((result) => {
-  if (result.statusCode === 200) console.log('Success!');
-  // insert code here
-}).catch((error) => console.error(error));
+cbm
+	.search({ inputConcepts: "date", outputConcepts: "time" })
+	.then(result => {
+		if (result.statusCode === 200) console.log("Success!");
+		// insert code here
+	})
+	.catch(error => console.error(error));
 
-cbm.search('date', 'time').then((result) => {
-  if (result.statusCode === 200) console.log('Success!');
-  // insert code here
-}).catch((error) => console.error(error));
+cbm
+	.search("date", "time")
+	.then(result => {
+		if (result.statusCode === 200) console.log("Success!");
+		// insert code here
+	})
+	.catch(error => console.error(error));
 ```
 
 ### `.call(...args)`
@@ -109,11 +118,10 @@ This method acts as a small helper to the usage of `.search` and `.call` methods
 Example code:
 
 ```javascript
-cbm.getCode('getTime.js').then(code => {
-  const getTime = eval(code);
-  getTime();
+cbm.getCode("getTime.js").then(code => {
+	const getTime = eval(code);
+	getTime();
 });
-
 ```
 
 ## `.create(params[, type])`
@@ -124,38 +132,38 @@ Example code:
 
 ```javascript
 let params = {
-  name: 'aConcept',
-  desc: 'aDescription',
+	name: "aConcept",
+	desc: "aDescription"
 };
 cbm.create(params);
 ```
 
 ```javascript
 let params = {
-  name: 'aFunction',
-  desc: 'aDescription',
-  argsNames: 'someArg',
-  argsUnits: 'someUnit',
-  returnsNames: 'someReturn',
-  returnsUnits: 'someUnit',
+	name: "aFunction",
+	desc: "aDescription",
+	argsNames: "someArg",
+	argsUnits: "someUnit",
+	returnsNames: "someReturn",
+	returnsUnits: "someUnit"
 };
-cbm.create(params, 'function');
+cbm.create(params, "function");
 
-params.codeFile = __dirname.concat('/someFile.js');
+params.codeFile = __dirname.concat("/someFile.js");
 (async () => {
-  let res = await cbm.create(params, 'function');
-  return res;
-})().then((res) => console.log(res));
+	let res = await cbm.create(params, "function");
+	return res;
+})().then(res => console.log(res));
 ```
 
 ```javascript
 let params = {
-  name: 'unitConversion',
-  start: 'meters',
-  end: 'feet',
-  mathRelation: '0.3 * start'
-}
-cbm.create(params, 'relation')
+	name: "unitConversion",
+	start: "meters",
+	end: "feet",
+	mathRelation: "0.3 * start"
+};
+cbm.create(params, "relation");
 ```
 
 ## Unit Tests
