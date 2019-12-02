@@ -23,7 +23,7 @@
 	},
 	"dependencies": {
 		"form-data": "^3.0.0",
-		"got": "^9.6.0",
+		"got": "^10.0.1",
 		"natural": "^0.6.3"
 	},
 	"devDependencies": {
