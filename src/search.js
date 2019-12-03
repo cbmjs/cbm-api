@@ -23,7 +23,7 @@ async function search(...args) {
 	}
 	let response;
 	try {
-		response = await got.post(this.fullAddress_("/gbm/search/"), { body: params, json: true, headers: { accept: null } });
+		response = await got.post(this.fullAddress_("/gbm/search/"), { json: params, responseType: "json", headers: { accept: undefined } });
 	} catch (error) {
 		({ response } = error);
 	}

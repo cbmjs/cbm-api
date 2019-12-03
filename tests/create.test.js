@@ -9,8 +9,8 @@ const HOST = process.env.HOST || "https://call-by-meaning.herokuapp.com";
 test.after.always(async () => {
 	const cbm = new CallByMeaning(HOST);
 	const path = cbm.host.concat("/new/fix");
-	await got.post(path, { body: { command: "fixtests" }, form: true });
-	await got.post(path, { body: { command: "fixit" }, form: true });
+	await got.post(path, { form: { command: "fixtests" } });
+	await got.post(path, { form: { command: "fixit" } });
 });
 
 test("throws an error if not supplied at least one argument", async (t) => {

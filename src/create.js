@@ -10,12 +10,11 @@ async function createConcept(params, host) {
 	}
 	try {
 		const res = await got.post(path, {
-			body: {
+			form: {
 				name: getURI(params.name),
 				desc: params.desc,
 				units: [].concat(params.units).map((el) => getURI(el)),
 			},
-			form: true,
 		});
 		return res.statusCode === 200;
 	} catch (error) {
@@ -30,7 +29,7 @@ async function createFunction(params, host) {
 	}
 	try {
 		const res = await got.post(path, {
-			body: {
+			form: {
 				name: params.name,
 				desc: params.desc,
 				argsNames: [].concat(params.argsNames).map((el) => getURI(el)),
@@ -38,7 +37,6 @@ async function createFunction(params, host) {
 				returnsNames: [].concat(params.returnsNames).map((el) => getURI(el)),
 				returnsUnits: [].concat(params.returnsUnits).map((el) => getURI(el)),
 			},
-			form: true,
 		});
 		return res.statusCode === 200;
 	} catch (error) {
@@ -72,7 +70,7 @@ async function createAsyncFunction(params, callPath, host) {
 
 	try {
 		const res = await got.post(path, { body: form });
-		await got.post(callPath, { body: { command: "fixit" }, form: true });
+		await got.post(callPath, { form: { command: "fixit" } });
 		return res.statusCode === 200;
 	} catch (error) {
 		return false;
@@ -86,14 +84,13 @@ async function createRelation(params, host) {
 	}
 	try {
 		const res = await got.post(path, {
-			body: {
+			form: {
 				name: params.name,
 				desc: params.desc,
 				start: getURI(params.start),
 				end: getURI(params.end),
 				mathRelation: params.mathRelation,
 			},
-			form: true,
 		});
 		return res.statusCode === 200;
 	} catch (error) {
@@ -137,7 +134,7 @@ async function create(...args) {
 		created = createRelation(params, this.host);
 	}
 	try {
-		await got.post(path, { body: { command: "fixit" }, form: true });
+		await got.post(path, { form: { command: "fixit" } });
 	} catch (error) { /**/ }
 	return created;
 }

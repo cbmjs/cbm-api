@@ -26,7 +26,7 @@ async function lookup(...args) {
 		const path = `/gbn/${type}/${String(encodeURIComponent(uri))}`;
 		const result = {};
 		try {
-			const response = await got(this.fullAddress_(path), { json: true });
+			const response = await got(this.fullAddress_(path), { responseType: "json" });
 			switch (type) {
 			case "c":
 				result.body = {
@@ -71,7 +71,7 @@ async function lookup(...args) {
 	const pathF = this.fullAddress_(`/gbn/f/${String(encodeURIComponent(uri))}`);
 	const pathR = this.fullAddress_(`/gbn/r/${String(encodeURIComponent(uri))}`);
 	try {
-		const response = await got(pathC, { json: true });
+		const response = await got(pathC, { responseType: "json" });
 		const result = {
 			name: response.body.name,
 			description: response.body.desc,
@@ -82,7 +82,7 @@ async function lookup(...args) {
 		return { body: result, statusCode: response.statusCode };
 	} catch (error) { /**/ }
 	try {
-		const response = await got(pathF, { json: true });
+		const response = await got(pathF, { responseType: "json" });
 		const result = {
 			name: response.body.name,
 			description: response.body.desc,
@@ -96,7 +96,7 @@ async function lookup(...args) {
 		return { body: result, statusCode: response.statusCode };
 	} catch (error) { /**/ }
 	try {
-		const response = await got(pathR, { json: true });
+		const response = await got(pathR, { responseType: "json" });
 		const result = {
 			name: response.body.name,
 			description: response.body.desc,
