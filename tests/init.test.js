@@ -1,6 +1,5 @@
-import test from "ava";
-
 require("dotenv").config();
+const test = require("ava");
 
 const CallByMeaning = require("..");
 
