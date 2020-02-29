@@ -15,7 +15,7 @@ function getURI(...args) {
 	if (!(typeof text === "string")) {
 		throw new TypeError(`Invalid input argument. Argument must be a string primitive. Value: \`${text}\`.`);
 	}
-	text = text.replace(/[^\w\d\s]/g, "");
+	text = text.replace(/[^\s\w]/g, "");
 	let stemmed = tokenizer.tokenize(text);
 	stemmed = stemmed.filter((item) => (item !== "a") && (item !== "the") && (item !== "an"));
 	return stemmed.join("_");

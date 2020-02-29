@@ -13,8 +13,8 @@ async function getCode(...args) {
 	}
 
 	let path;
-	if (codeFile.indexOf("/js") > -1 || codeFile.indexOf("/internal") > -1) {
-		path = this.fullAddress_(codeFile.substring(1));
+	if (codeFile.includes("/js") || codeFile.includes("/internal")) {
+		path = this.fullAddress_(codeFile.slice(1));
 	} else {
 		path = codeFile[0] === "_" ? this.fullAddress_(`/js/internal/${codeFile}`) : this.fullAddress_(`/js/${codeFile}`);
 	}

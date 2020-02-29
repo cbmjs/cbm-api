@@ -114,7 +114,7 @@ async function create(...args) {
 		type = "concept";
 	} else {
 		[, type] = args;
-		if ((!(typeof type === "string") || (["concept", "function", "relation"].indexOf(type) === -1))) {
+		if ((!(typeof type === "string") || (!["concept", "function", "relation"].includes(type)))) {
 			throw new TypeError(`Invalid input argument. type argument must be one of 'concept', 'function', 'relation'. Value: \`${type}\`.`);
 		}
 	}
