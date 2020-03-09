@@ -10,7 +10,7 @@ test("creates an instance of cbm-api", (t) => {
 	t.true(cbm instanceof CallByMeaning);
 });
 
-test("can't be invoked without new", (t) => {
+test("can’t be invoked without new", (t) => {
 	t.throws(() => CallByMeaning(HOST));
 });
 

@@ -18,7 +18,7 @@ async function lookup(...args) {
 	} else {
 		[, type] = args;
 		if ((!(typeof uri === "string") || (!["c", "f", "r"].includes(type)))) {
-			throw new TypeError(`Invalid input argument. type argument must be one of 'c', 'f', 'r'. Value: \`${type}\`.`);
+			throw new TypeError(`Invalid input argument. type argument must be one of \`c\`, \`f\`, \`r\`. Value: \`${type}\`.`);
 		}
 	}
 
@@ -62,7 +62,7 @@ async function lookup(...args) {
 			default:
 			}
 		} catch (error) {
-			result.body = { String: "Couldn't find that in DB." }; // Keep convention that always an object is returned.
+			result.body = { String: "Couldn’t find that in DB." }; // Keep convention that always an object is returned.
 			result.statusCode = error.response.statusCode;
 		}
 		return result;
@@ -104,7 +104,7 @@ async function lookup(...args) {
 		};
 		return { body: result, statusCode: response.statusCode };
 	} catch (error) {
-		return { body: { String: "Couldn't find that in DB." }, statusCode: error.response.statusCode };
+		return { body: { String: "Couldn’t find that in DB." }, statusCode: error.response.statusCode };
 	}
 }
 

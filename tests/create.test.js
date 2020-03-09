@@ -101,25 +101,25 @@ test("creates a single Concept if no type specified", async (t) => {
 	t.true(result);
 });
 
-test("returns correctly if test can't create the concept in the server (with specified type)", async (t) => {
+test("returns correctly if test can’t create the concept in the server (with specified type)", async (t) => {
 	const cbm = new CallByMeaning(HOST);
 	const result = await cbm.create({ desc: "blabla" }, "concept");
 	t.false(result);
 });
 
-test("returns correctly if test can't create the concept in the server (without specified type)", async (t) => {
+test("returns correctly if test can’t create the concept in the server (without specified type)", async (t) => {
 	const cbm = new CallByMeaning(HOST);
 	const result = await cbm.create({ desc: "blabla" });
 	t.false(result);
 });
 
-test("returns correctly if test can't create the function in the server", async (t) => {
+test("returns correctly if test can’t create the function in the server", async (t) => {
 	const cbm = new CallByMeaning(HOST);
 	const result = await cbm.create({ desc: "blabla" }, "function");
 	t.false(result);
 });
 
-test("returns correctly if test can't create the relation in the server", async (t) => {
+test("returns correctly if test can’t create the relation in the server", async (t) => {
 	const cbm = new CallByMeaning(HOST);
 	const result = await cbm.create({ desc: "blabla" }, "relation");
 	t.false(result);

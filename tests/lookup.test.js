@@ -66,25 +66,25 @@ test("looks up a single relation", async (t) => {
 	t.is(response.statusCode, 200);
 });
 
-test("looks up a single concept without specified 'c' type", async (t) => {
+test("looks up a single concept without specified `c` type", async (t) => {
 	const cbm = new CallByMeaning(HOST);
 	const response = await cbm.lookup("function");
 	t.is(response.statusCode, 200);
 });
 
-test("looks up a single function without specified 'f' type", async (t) => {
+test("looks up a single function without specified `f` type", async (t) => {
 	const cbm = new CallByMeaning(HOST);
 	const response = await cbm.lookup("now");
 	t.is(response.statusCode, 200);
 });
 
-test("looks up a single relation without specified 'r' type", async (t) => {
+test("looks up a single relation without specified `r` type", async (t) => {
 	const cbm = new CallByMeaning(HOST);
 	const response = await cbm.lookup("unitConversion");
 	t.is(response.statusCode, 200);
 });
 
-test("returns correctly if test can't find the object in the server (with specified type)", async (t) => {
+test("returns correctly if test can’t find the object in the server (with specified type)", async (t) => {
 	const cbm = new CallByMeaning();
 	t.plan(6);
 	let response = await cbm.lookup("blabla", "c");
@@ -98,7 +98,7 @@ test("returns correctly if test can't find the object in the server (with specif
 	t.true(response.body instanceof Object);
 });
 
-test("returns correctly if test can't find the object in the server (without specified type)", async (t) => {
+test("returns correctly if test can’t find the object in the server (without specified type)", async (t) => {
 	const cbm = new CallByMeaning();
 	const response = await cbm.lookup("blabla");
 	t.is(response.statusCode, 418);
