@@ -25,7 +25,7 @@ test("throws an error if params argument is not an object", async (t) => {
 		5,
 		true,
 		undefined,
-		NaN,
+		Number.NaN,
 		"test",
 	];
 
@@ -44,7 +44,7 @@ test("throws an error if type argument is not one of concept, function, relation
 		true,
 		undefined,
 		null,
-		NaN,
+		Number.NaN,
 		[],
 		{},
 	];

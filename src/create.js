@@ -17,7 +17,7 @@ async function createConcept(params, host) {
 			},
 		});
 		return res.statusCode === 200;
-	} catch (error) {
+	} catch {
 		return false;
 	}
 }
@@ -39,7 +39,7 @@ async function createFunction(params, host) {
 			},
 		});
 		return res.statusCode === 200;
-	} catch (error) {
+	} catch {
 		return false;
 	}
 }
@@ -72,7 +72,7 @@ async function createAsyncFunction(params, callPath, host) {
 		const res = await got.post(path, { body: form });
 		await got.post(callPath, { form: { command: "fixit" } });
 		return res.statusCode === 200;
-	} catch (error) {
+	} catch {
 		return false;
 	}
 }
@@ -93,7 +93,7 @@ async function createRelation(params, host) {
 			},
 		});
 		return res.statusCode === 200;
-	} catch (error) {
+	} catch {
 		return false;
 	}
 }
@@ -135,7 +135,7 @@ async function create(...args) {
 	}
 	try {
 		await got.post(path, { form: { command: "fixit" } });
-	} catch (error) { /**/ }
+	} catch { /**/ }
 	return created;
 }
 

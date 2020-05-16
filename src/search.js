@@ -30,7 +30,7 @@ async function search(...args) {
 	try {
 		const result = response.body.map((obj) => ({ function: obj.function.split("/").pop(), description: obj.desc }));
 		return { body: result, statusCode: response.statusCode };
-	} catch (error) {
+	} catch {
 		return { body: response.body, statusCode: response.statusCode };
 	}
 }

@@ -80,7 +80,7 @@ async function lookup(...args) {
 			asOutput: response.body.func_res.map((obj) => ({ name: obj.name, unit: obj.unitType })),
 		};
 		return { body: result, statusCode: response.statusCode };
-	} catch (error) { /**/ }
+	} catch { /**/ }
 	try {
 		const response = await got(pathF, { responseType: "json" });
 		const result = {
@@ -94,7 +94,7 @@ async function lookup(...args) {
 			sourceCode: response.body.codeFile,
 		};
 		return { body: result, statusCode: response.statusCode };
-	} catch (error) { /**/ }
+	} catch { /**/ }
 	try {
 		const response = await got(pathR, { responseType: "json" });
 		const result = {

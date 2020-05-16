@@ -169,7 +169,3 @@ cbm.create(params, "relation");
 ## Unit Tests
 
 Run tests via the command `yarn test`
-
-## License
-
-AGPL-3.0 © [Napoleon-Christos Oikonomou](https://iamnapo.me)

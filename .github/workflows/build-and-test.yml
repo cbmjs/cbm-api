@@ -12,10 +12,11 @@ jobs:
           node-version: 12
       - run: yarn
       - run: yarn test
+        env:
+          CI: true
       - name: Generate coverage report
         run: yarn nyc report --reporter=text-lcov > coverage.lcov
       - uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: ./coverage.lcov
-          yml: ./codecov.yml

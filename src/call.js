@@ -61,7 +61,7 @@ async function call(...args) {
 	let result = response.body;
 	try {
 		result = JSON.parse(response.body);
-	} catch (error) { /**/ }
+	} catch { /**/ }
 	return { body: result, statusCode: response.statusCode };
 }
 

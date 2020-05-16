@@ -18,7 +18,7 @@ test("throws an error if URI argument is not a string primitive", async (t) => {
 		true,
 		undefined,
 		null,
-		NaN,
+		Number.NaN,
 		[],
 		{},
 	];
@@ -38,7 +38,7 @@ test("throws an error if type argument is not one of c, f, r", async (t) => {
 		true,
 		undefined,
 		null,
-		NaN,
+		Number.NaN,
 		[],
 	];
 
