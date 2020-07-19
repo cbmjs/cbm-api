@@ -1,6 +1,8 @@
 const fs = require("fs");
+
 const got = require("got");
 const FormData = require("form-data");
+
 const getURI = require("./get-uri");
 
 async function createConcept(params, host) {

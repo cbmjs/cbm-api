@@ -1,4 +1,5 @@
 const got = require("got");
+
 const JSON = require("../lib/jsonfn");
 
 async function call(...args) {
