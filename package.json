@@ -23,15 +23,15 @@
 	},
 	"dependencies": {
 		"form-data": "^3.0.0",
-		"got": "^11.5.1",
+		"got": "^11.6.2",
 		"natural": "^2.1.5"
 	},
 	"devDependencies": {
-		"ava": "^3.10.1",
-		"codecov": "^3.7.1",
+		"ava": "^3.12.1",
+		"codecov": "^3.7.2",
 		"dotenv": "^8.2.0",
-		"eslint": "^7.5.0",
-		"eslint-config-iamnapo": "^6.0.3",
+		"eslint": "^7.9.0",
+		"eslint-config-iamnapo": "^7.0.1",
 		"eslint-plugin-import": "^2.22.0",
 		"eslint-plugin-unicorn": "^21.0.0",
 		"nyc": "^15.1.0"
