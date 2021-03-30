@@ -168,4 +168,4 @@ cbm.create(params, "relation");
 
 ## Unit Tests
 
-Run tests via the command `yarn test`
+Run tests via the command `npm test`

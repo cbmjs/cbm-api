@@ -19,7 +19,7 @@
 	},
 	"scripts": {
 		"lint": "eslint . --cache",
-		"test": "yarn lint && nyc ava -v"
+		"test": "npm run lint && nyc ava -v"
 	},
 	"dependencies": {
 		"form-data": "^4.0.0",
