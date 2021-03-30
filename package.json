@@ -19,7 +19,8 @@
 	},
 	"scripts": {
 		"lint": "eslint . --cache",
-		"test": "npm run lint && nyc ava -v"
+		"test": "npm run lint && nyc ava -v",
+		"generate-coverage-report": "nyc report --reporter=text-lcov > coverage.lcov"
 	},
 	"dependencies": {
 		"form-data": "^4.0.0",
