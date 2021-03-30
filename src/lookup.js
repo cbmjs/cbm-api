@@ -28,38 +28,38 @@ async function lookup(...args) {
 		try {
 			const response = await got(this.fullAddress_(path), { responseType: "json" });
 			switch (type) {
-			case "c":
-				result.body = {
-					name: response.body.name,
-					description: response.body.desc,
-					units: response.body.units,
-					asInput: response.body.func_arg.map((obj) => ({ name: obj.name, unit: obj.unitType })),
-					asOutput: response.body.func_res.map((obj) => ({ name: obj.name, unit: obj.unitType })),
-				};
-				result.statusCode = response.statusCode;
-				break;
-			case "f":
-				result.body = {
-					name: response.body.name,
-					description: response.body.desc,
-					units: response.body.units,
-					argsNames: response.body.argsNames,
-					argsUnits: response.body.argsUnits,
-					returnsNames: response.body.returnsNames,
-					returnsUnits: response.body.returnsUnits,
-					sourceCode: response.body.codeFile,
-				};
-				result.statusCode = response.statusCode;
-				break;
-			case "r":
-				result.body = {
-					name: response.body.name,
-					description: response.body.desc,
-					connections: response.body.connects.map((obj) => ({ start: obj.start.name, end: obj.end.name, mathRelation: obj.mathRelation })),
-				};
-				result.statusCode = response.statusCode;
-				break;
-			default:
+				case "c":
+					result.body = {
+						name: response.body.name,
+						description: response.body.desc,
+						units: response.body.units,
+						asInput: response.body.func_arg.map((obj) => ({ name: obj.name, unit: obj.unitType })),
+						asOutput: response.body.func_res.map((obj) => ({ name: obj.name, unit: obj.unitType })),
+					};
+					result.statusCode = response.statusCode;
+					break;
+				case "f":
+					result.body = {
+						name: response.body.name,
+						description: response.body.desc,
+						units: response.body.units,
+						argsNames: response.body.argsNames,
+						argsUnits: response.body.argsUnits,
+						returnsNames: response.body.returnsNames,
+						returnsUnits: response.body.returnsUnits,
+						sourceCode: response.body.codeFile,
+					};
+					result.statusCode = response.statusCode;
+					break;
+				case "r":
+					result.body = {
+						name: response.body.name,
+						description: response.body.desc,
+						connections: response.body.connects.map((obj) => ({ start: obj.start.name, end: obj.end.name, mathRelation: obj.mathRelation })),
+					};
+					result.statusCode = response.statusCode;
+					break;
+				default:
 			}
 		} catch (error) {
 			result.body = { String: "Couldn’t find that in DB." }; // Keep convention that always an object is returned.

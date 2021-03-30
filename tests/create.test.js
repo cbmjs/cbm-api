@@ -8,7 +8,7 @@ const HOST = process.env.HOST || "https://call-by-meaning.herokuapp.com";
 
 test.after.always(async () => {
 	const cbm = new CallByMeaning(HOST);
-	const path = cbm.host.concat("/new/fix");
+	const path = `${cbm.host}/new/fix`;
 	await got.post(path, { form: { command: "fixtests" } });
 	await got.post(path, { form: { command: "fixit" } });
 });
@@ -31,7 +31,7 @@ test("throws an error if params argument is not an object", async (t) => {
 
 	t.plan(values.length);
 	const tests = [];
-	values.forEach((i) => tests.push(t.throwsAsync(cbm.create(i))));
+	for (const i of values) tests.push(t.throwsAsync(cbm.create(i)));
 	await Promise.all(tests);
 });
 
@@ -51,7 +51,7 @@ test("throws an error if type argument is not one of concept, function, relation
 
 	t.plan(values.length);
 	const tests = [];
-	values.forEach((i) => tests.push(t.throwsAsync(cbm.create({ name: "Napo" }, i))));
+	for (const i of values) tests.push(t.throwsAsync(cbm.create({ name: "Napo" }, i)));
 	await Promise.all(tests);
 });
 
@@ -72,14 +72,14 @@ test("creates a single Function", async (t) => {
 test("creates a single async Function with existing file", async (t) => {
 	const cbm = new CallByMeaning(HOST);
 	const result = await cbm.create({
-		name: "jsonfn", argsNames: "Napo", argsUnits: "napo", returnsNames: "nApo", returnsUnits: "naPo", codeFile: __dirname.concat("/../lib/jsonfn.js"),
+		name: "jsonfn", argsNames: "Napo", argsUnits: "napo", returnsNames: "nApo", returnsUnits: "naPo", codeFile: `${__dirname}/../lib/jsonfn.js`,
 	}, "function");
 	t.true(result);
 });
 
 test("create a single async Function with existing file but not name returns correctly", async (t) => {
 	const cbm = new CallByMeaning(HOST);
-	const result = await cbm.create({ codeFile: __dirname.concat("/../lib/jsonfn.js") }, "function");
+	const result = await cbm.create({ codeFile: `${__dirname}/../lib/jsonfn.js` }, "function");
 	t.false(result);
 });
 

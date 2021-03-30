@@ -7,7 +7,7 @@ class CallByMeaning {
 	}
 
 	fullAddress_(path) {
-		return this.host.concat(path);
+		return this.host + path;
 	}
 }
 

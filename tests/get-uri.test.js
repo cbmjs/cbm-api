@@ -21,7 +21,7 @@ test("throws an error if argument is not a string primitive", (t) => {
 	];
 
 	t.plan(values.length);
-	values.forEach((i) => t.throws(() => cbm.getURI(i)));
+	for (const i of values) t.throws(() => cbm.getURI(i));
 });
 
 test("looks up the cbmjs URI for text", (t) => {

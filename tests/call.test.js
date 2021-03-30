@@ -52,5 +52,5 @@ test("is possible to retrieve results with different units", async (t) => {
 	const response2 = await cbm.call("time", "milliseconds");
 	t.is(response.statusCode, response2.statusCode);
 	t.is(response.statusCode, 200);
-	t.true(response2.body - (3600000 * response.body) < 2000);
+	t.true(response2.body - (3_600_000 * response.body) < 2000);
 });

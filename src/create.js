@@ -6,7 +6,8 @@ const FormData = require("form-data");
 const getURI = require("./get-uri");
 
 async function createConcept(params, host) {
-	const path = host.concat("/new/concept");
+	const path = `${host}/new/concept`;
+	console.log(path);
 	if (!params.name) {
 		return false;
 	}
@@ -15,7 +16,7 @@ async function createConcept(params, host) {
 			form: {
 				name: getURI(params.name),
 				desc: params.desc,
-				units: [].concat(params.units).map((el) => getURI(el)),
+				units: [params.units].flat().map((el) => getURI(el)),
 			},
 		});
 		return res.statusCode === 200;
@@ -25,7 +26,7 @@ async function createConcept(params, host) {
 }
 
 async function createFunction(params, host) {
-	const path = host.concat("/new/function");
+	const path = `${host}/new/function`;
 	if (!params.name) {
 		return false;
 	}
@@ -34,10 +35,10 @@ async function createFunction(params, host) {
 			form: {
 				name: params.name,
 				desc: params.desc,
-				argsNames: [].concat(params.argsNames).map((el) => getURI(el)),
-				argsUnits: [].concat(params.argsUnits).map((el) => getURI(el)),
-				returnsNames: [].concat(params.returnsNames).map((el) => getURI(el)),
-				returnsUnits: [].concat(params.returnsUnits).map((el) => getURI(el)),
+				argsNames: [params.argsNames].flat().map((el) => getURI(el)),
+				argsUnits: [params.argsUnits].flat().map((el) => getURI(el)),
+				returnsNames: [params.returnsNames].flat().map((el) => getURI(el)),
+				returnsUnits: [params.returnsUnits].flat().map((el) => getURI(el)),
 			},
 		});
 		return res.statusCode === 200;
@@ -47,7 +48,7 @@ async function createFunction(params, host) {
 }
 
 async function createAsyncFunction(params, callPath, host) {
-	const path = host.concat("/new/function");
+	const path = `${host}/new/function`;
 	if (!params.name) {
 		return false;
 	}
@@ -64,10 +65,10 @@ async function createAsyncFunction(params, callPath, host) {
 	const form = new FormData();
 	form.append("name", fullParams.name);
 	form.append("desc", fullParams.desc);
-	form.append("argsNames", `${[].concat(fullParams.argsNames).map((el) => getURI(el))}`);
-	form.append("argsUnits", `${[].concat(fullParams.argsUnits).map((el) => getURI(el))}`);
-	form.append("returnsNames", `${[].concat(fullParams.returnsNames).map((el) => getURI(el))}`);
-	form.append("returnsUnits", `${[].concat(fullParams.returnsUnits).map((el) => getURI(el))}`);
+	form.append("argsNames", `${[fullParams.argsNames].flat().map((el) => getURI(el))}`);
+	form.append("argsUnits", `${[fullParams.argsUnits].flat().map((el) => getURI(el))}`);
+	form.append("returnsNames", `${[fullParams.returnsNames].flat().map((el) => getURI(el))}`);
+	form.append("returnsUnits", `${[fullParams.returnsUnits].flat().map((el) => getURI(el))}`);
 	form.append("codeFile", fs.createReadStream(fullParams.codeFile));
 
 	try {
@@ -80,7 +81,7 @@ async function createAsyncFunction(params, callPath, host) {
 }
 
 async function createRelation(params, host) {
-	const path = host.concat("/new/relation");
+	const path = `${host}/new/relation`;
 	if (!params.name) {
 		return false;
 	}
@@ -121,7 +122,7 @@ async function create(...args) {
 		}
 	}
 
-	const path = this.host.concat("/new/fix");
+	const path = `${this.host}/new/fix`;
 	if (!(!params.codeFile || params.codeFile.length === 0)) {
 		return createAsyncFunction(params, path, this.host);
 	}

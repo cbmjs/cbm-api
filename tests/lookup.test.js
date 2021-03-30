@@ -25,7 +25,7 @@ test("throws an error if URI argument is not a string primitive", async (t) => {
 
 	t.plan(values.length);
 	const tests = [];
-	values.forEach((i) => tests.push(t.throwsAsync(cbm.lookup(i))));
+	for (const i of values) tests.push(t.throwsAsync(cbm.lookup(i)));
 	await Promise.all(tests);
 });
 
@@ -44,7 +44,7 @@ test("throws an error if type argument is not one of c, f, r", async (t) => {
 
 	t.plan(values.length);
 	const tests = [];
-	values.forEach((i) => tests.push(t.throwsAsync(cbm.lookup("time", i))));
+	for (const i of values) tests.push(t.throwsAsync(cbm.lookup("time", i)));
 	await Promise.all(tests);
 });
 

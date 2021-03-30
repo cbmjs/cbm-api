@@ -13,7 +13,7 @@ test("throws an error if supplied with more than one argument", async (t) => {
 test("throws an error if argument is not a string primitive", async (t) => {
 	const cbm = new CallByMeaning(HOST);
 	const values = [
-		() => { },
+		() => {},
 		5,
 		true,
 		[],
@@ -22,7 +22,7 @@ test("throws an error if argument is not a string primitive", async (t) => {
 
 	t.plan(values.length);
 	const tests = [];
-	values.forEach((i) => tests.push(t.throwsAsync(cbm.ask(i))));
+	for (const i of values) tests.push(t.throwsAsync(cbm.ask(i)));
 	await Promise.all(tests);
 });
 
