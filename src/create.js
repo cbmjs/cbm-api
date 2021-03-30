@@ -7,7 +7,6 @@ const getURI = require("./get-uri");
 
 async function createConcept(params, host) {
 	const path = `${host}/new/concept`;
-	console.log(path);
 	if (!params.name) {
 		return false;
 	}
