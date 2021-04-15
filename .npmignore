@@ -58,7 +58,3 @@ typings/
 
 # dotenv environment variables file
 .env
-
-## Additional files
-.travis.yml
-codecov.yml

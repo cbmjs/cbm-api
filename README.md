@@ -2,7 +2,7 @@
 
 > Node.js interface to the cbmjs network server. For further information, consult the website of the server-side project: [cbm-engine](https://github.com/cbmjs/cbm-engine).
 
-[![build](https://img.shields.io/github/workflow/status/cbmjs/cbm-api/ci?style=for-the-badge&logo=github&label=)](https://github.com/cbmjs/cbm-api/actions) [![codecov](https://img.shields.io/codecov/c/github/cbmjs/cbm-api.svg?style=for-the-badge)](https://codecov.io/gh/cbmjs/cbm-api) [![npm](https://img.shields.io/npm/v/@cbmjs/cbm-api.svg?style=for-the-badge)](https://www.npmjs.com/package/cbmjs/cbm-api) [![license](https://img.shields.io/github/license/cbmjs/cbm-api.svg?style=for-the-badge)](https://github.com/cbmjs/cbm-api/blob/master/LICENSE)
+[![build](https://img.shields.io/github/workflow/status/cbmjs/cbm-api/ci?style=for-the-badge&logo=github&label=)](https://github.com/cbmjs/cbm-api/actions) [![npm](https://img.shields.io/npm/v/@cbmjs/cbm-api.svg?style=for-the-badge)](https://www.npmjs.com/package/cbmjs/cbm-api) [![license](https://img.shields.io/github/license/cbmjs/cbm-api.svg?style=for-the-badge)](https://github.com/cbmjs/cbm-api/blob/master/LICENSE)
 
 ## Introduction
 
