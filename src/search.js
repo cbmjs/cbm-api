@@ -1,6 +1,6 @@
-const got = require("got");
+import got from "got";
 
-async function search(...args) {
+export default async function search(...args) {
 	const nargs = args.length;
 	let params;
 
@@ -34,5 +34,3 @@ async function search(...args) {
 		return { body: response.body, statusCode: response.statusCode };
 	}
 }
-
-module.exports = search;

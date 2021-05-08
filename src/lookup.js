@@ -1,6 +1,6 @@
-const got = require("got");
+import got from "got";
 
-async function lookup(...args) {
+export default async function lookup(...args) {
 	const nargs = args.length;
 	let type;
 
@@ -55,7 +55,11 @@ async function lookup(...args) {
 					result.body = {
 						name: response.body.name,
 						description: response.body.desc,
-						connections: response.body.connects.map((obj) => ({ start: obj.start.name, end: obj.end.name, mathRelation: obj.mathRelation })),
+						connections: response.body.connects.map((obj) => ({
+							start: obj.start.name,
+							end: obj.end.name,
+							mathRelation: obj.mathRelation,
+						})),
 					};
 					result.statusCode = response.statusCode;
 					break;
@@ -100,12 +104,14 @@ async function lookup(...args) {
 		const result = {
 			name: response.body.name,
 			description: response.body.desc,
-			connections: response.body.connects.map((obj) => ({ start: obj.start.name, end: obj.end.name, mathRelation: obj.mathRelation })),
+			connections: response.body.connects.map((obj) => ({
+				start: obj.start.name,
+				end: obj.end.name,
+				mathRelation: obj.mathRelation,
+			})),
 		};
 		return { body: result, statusCode: response.statusCode };
 	} catch (error) {
 		return { body: { String: "Couldn’t find that in DB." }, statusCode: error.response.statusCode };
 	}
 }
-
-module.exports = lookup;

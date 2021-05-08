@@ -1,8 +1,10 @@
-require("dotenv").config();
-const test = require("ava");
-const got = require("got");
+import "dotenv/config";
+import { dirname } from "node:path";
+import { fileURLToPath } from "node:url";
+import test from "ava";
+import got from "got";
 
-const CallByMeaning = require("..");
+import CallByMeaning from "../index.js";
 
 const HOST = process.env.HOST || "https://call-by-meaning.herokuapp.com";
 
@@ -72,14 +74,14 @@ test("creates a single Function", async (t) => {
 test("creates a single async Function with existing file", async (t) => {
 	const cbm = new CallByMeaning(HOST);
 	const result = await cbm.create({
-		name: "jsonfn", argsNames: "Napo", argsUnits: "napo", returnsNames: "nApo", returnsUnits: "naPo", codeFile: `${__dirname}/../lib/jsonfn.js`,
+		name: "jsonfn", argsNames: "Napo", argsUnits: "napo", returnsNames: "nApo", returnsUnits: "naPo", codeFile: `${dirname(fileURLToPath(import.meta.url))}/../lib/jsonfn.js`,
 	}, "function");
 	t.true(result);
 });
 
 test("create a single async Function with existing file but not name returns correctly", async (t) => {
 	const cbm = new CallByMeaning(HOST);
-	const result = await cbm.create({ codeFile: `${__dirname}/../lib/jsonfn.js` }, "function");
+	const result = await cbm.create({ codeFile: `${dirname(fileURLToPath(import.meta.url))}/../lib/jsonfn.js` }, "function");
 	t.false(result);
 });
 

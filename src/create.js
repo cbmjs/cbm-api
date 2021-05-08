@@ -1,9 +1,8 @@
-const fs = require("fs");
+import fs from "node:fs";
+import got from "got";
+import FormData from "form-data";
 
-const got = require("got");
-const FormData = require("form-data");
-
-const getURI = require("./get-uri");
+import getURI from "./get-uri.js";
 
 async function createConcept(params, host) {
 	const path = `${host}/new/concept`;
@@ -100,7 +99,7 @@ async function createRelation(params, host) {
 	}
 }
 
-async function create(...args) {
+export default async function create(...args) {
 	const nargs = args.length;
 	let type;
 
@@ -140,5 +139,3 @@ async function create(...args) {
 	} catch { /**/ }
 	return created;
 }
-
-module.exports = create;

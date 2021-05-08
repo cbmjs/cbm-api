@@ -1,4 +1,4 @@
-const luiS = require("../lib/luis");
+import luiS from "../lib/luis.js";
 
 const luis = luiS({
 	appId: "98dad933-f92f-4d45-aabc-9f00caa9ffb3",
@@ -6,7 +6,7 @@ const luis = luiS({
 	verbose: true,
 });
 
-async function ask(...args) {
+export default async function ask(...args) {
 	const nargs = args.length;
 	const params = {};
 	params.inputConcepts = [];
@@ -35,5 +35,3 @@ async function ask(...args) {
 	}
 	return this.search(params);
 }
-
-module.exports = ask;

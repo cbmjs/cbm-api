@@ -1,8 +1,8 @@
-const natural = require("natural");
+import natural from "natural";
 
 const tokenizer = new natural.WordTokenizer();
 
-function getURI(...args) {
+export default function getURI(...args) {
 	const nargs = args.length;
 	let text;
 	if (!args[0]) {
@@ -20,5 +20,3 @@ function getURI(...args) {
 	stemmed = stemmed.filter((item) => (item !== "a") && (item !== "the") && (item !== "an"));
 	return stemmed.join("_");
 }
-
-module.exports = getURI;

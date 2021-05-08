@@ -1,8 +1,8 @@
-const got = require("got");
+import got from "got";
 
-const JSON = require("../lib/jsonfn");
+import * as JSON from "../lib/jsonfn.js";
 
-async function call(...args) {
+export default async function call(...args) {
 	const nargs = args.length;
 	let params;
 	let returnCode = false;
@@ -65,5 +65,3 @@ async function call(...args) {
 	} catch { /**/ }
 	return { body: result, statusCode: response.statusCode };
 }
-
-module.exports = call;

@@ -1,6 +1,6 @@
-const got = require("got");
+import got from "got";
 
-async function getCode(...args) {
+export default async function getCode(...args) {
 	const nargs = args.length;
 
 	if (nargs !== 1) {
@@ -22,5 +22,3 @@ async function getCode(...args) {
 	const res = await got(path);
 	return res.body;
 }
-
-module.exports = getCode;

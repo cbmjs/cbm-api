@@ -1,7 +1,8 @@
-require("dotenv").config();
-const test = require("ava");
+import "dotenv/config";
 
-const CallByMeaning = require("..");
+import test from "ava";
+
+import CallByMeaning from "../index.js";
 
 const HOST = process.env.HOST || "https://call-by-meaning.herokuapp.com";
 
