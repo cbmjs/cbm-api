@@ -22,16 +22,16 @@
 	"dependencies": {
 		"form-data": "^4.0.0",
 		"got": "^11.8.2",
-		"natural": "^5.0.3"
+		"natural": "^5.0.5"
 	},
 	"devDependencies": {
 		"ava": "^3.15.0",
-		"c8": "^7.7.2",
-		"dotenv": "^9.0.0",
-		"eslint": "^7.26.0",
-		"eslint-config-iamnapo": "^14.3.1",
-		"eslint-plugin-import": "^2.22.1",
-		"eslint-plugin-unicorn": "^31.0.0"
+		"c8": "^7.8.0",
+		"dotenv": "^10.0.0",
+		"eslint": "^7.32.0",
+		"eslint-config-iamnapo": "^16.1.0",
+		"eslint-plugin-import": "^2.24.1",
+		"eslint-plugin-unicorn": "^35.0.0"
 	},
 	"engines": {
 		"node": ">=12"
