@@ -51,6 +51,7 @@ export default async function call(...args) {
 	} catch (error) {
 		({ response } = error);
 	}
+
 	if (returnCode) {
 		try {
 			const result = await this.getCode(response.body.function);
@@ -59,9 +60,11 @@ export default async function call(...args) {
 			return { body: error.response, statusCode: response.statusCode };
 		}
 	}
+
 	let result = response.body;
 	try {
 		result = JSON.parse(response.body);
 	} catch { /**/ }
+
 	return { body: result, statusCode: response.statusCode };
 }

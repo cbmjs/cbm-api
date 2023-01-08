@@ -1,7 +1,7 @@
 import fs from "node:fs";
 
 import got from "got";
-import FormData from "form-data";
+import { FormData } from "formdata-node";
 
 import getURI from "./get-uri.js";
 
@@ -10,6 +10,7 @@ async function createConcept(params, host) {
 	if (!params.name) {
 		return false;
 	}
+
 	try {
 		const res = await got.post(path, {
 			form: {
@@ -29,6 +30,7 @@ async function createFunction(params, host) {
 	if (!params.name) {
 		return false;
 	}
+
 	try {
 		const res = await got.post(path, {
 			form: {
@@ -51,6 +53,7 @@ async function createAsyncFunction(params, callPath, host) {
 	if (!params.name) {
 		return false;
 	}
+
 	const fullParams = {
 		name: "",
 		desc: "",
@@ -84,6 +87,7 @@ async function createRelation(params, host) {
 	if (!params.name) {
 		return false;
 	}
+
 	try {
 		const res = await got.post(path, {
 			form: {
@@ -107,6 +111,7 @@ export default async function create(...args) {
 	if (nargs < 1) {
 		throw new Error("Insufficient input arguments. Must provide a params object.");
 	}
+
 	const [params] = args;
 	if (typeof params !== "object" || !params) {
 		throw new TypeError("Invalid input argument. Argument must be an object.");
@@ -125,18 +130,23 @@ export default async function create(...args) {
 	if (!(!params.codeFile || params.codeFile.length === 0)) {
 		return createAsyncFunction(params, path, this.host);
 	}
+
 	let created = false;
 	if (type === "concept") {
 		created = createConcept(params, this.host);
 	}
+
 	if (type === "function") {
 		created = createFunction(params, this.host);
 	}
+
 	if (type === "relation") {
 		created = createRelation(params, this.host);
 	}
+
 	try {
 		await got.post(path, { form: { command: "fixit" } });
 	} catch { /**/ }
+
 	return created;
 }

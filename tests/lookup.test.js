@@ -4,7 +4,7 @@ import test from "ava";
 
 import CallByMeaning from "../index.js";
 
-const HOST = process.env.HOST || "https://call-by-meaning.herokuapp.com";
+const HOST = process.env.HOST || "https://call-by-meaning.onrender.com";
 
 test("throws an error if not supplied at least one argument", async (t) => {
 	const cbm = new CallByMeaning(HOST);

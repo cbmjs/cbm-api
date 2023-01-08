@@ -17,23 +17,39 @@
 	"exports": "./index.js",
 	"scripts": {
 		"lint": "eslint . --cache",
-		"test": "npm run lint && c8 ava -v"
+		"test": "npm run lint && c8 ava"
+	},
+	"eslintConfig": {
+		"extends": "iamnapo",
+		"rules": {
+			"import/no-unresolved": [
+				"error",
+				{
+					"ignore": [
+						"ava",
+						"got"
+					]
+				}
+			]
+		}
+	},
+	"ava": {
+		"timeout": "1m",
+		"verbose": true
 	},
 	"dependencies": {
-		"form-data": "^4.0.0",
-		"got": "^11.8.2",
-		"natural": "^5.0.5"
+		"formdata-node": "^5.0.0",
+		"got": "^12.5.3",
+		"natural": "^6.1.2"
 	},
 	"devDependencies": {
-		"ava": "^3.15.0",
-		"c8": "^7.8.0",
-		"dotenv": "^10.0.0",
-		"eslint": "^7.32.0",
-		"eslint-config-iamnapo": "^16.1.0",
-		"eslint-plugin-import": "^2.24.1",
-		"eslint-plugin-unicorn": "^35.0.0"
+		"ava": "^5.1.0",
+		"c8": "^7.12.0",
+		"dotenv": "^16.0.3",
+		"eslint": "^8.31.0",
+		"eslint-config-iamnapo": "^28.0.0"
 	},
 	"engines": {
-		"node": ">=12"
+		"node": ">=14.8"
 	}
 }

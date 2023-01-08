@@ -21,12 +21,14 @@ export default async function search(...args) {
 	} else {
 		throw new Error("Too many input arguments. Must provide one params object or two arrays/strings(input, output) or one array/string(output).");
 	}
+
 	let response;
 	try {
 		response = await got.post(this.fullAddress_("/gbm/search/"), { json: params, responseType: "json", headers: { accept: undefined } });
 	} catch (error) {
 		({ response } = error);
 	}
+
 	try {
 		const result = response.body.map((obj) => ({ function: obj.function.split("/").pop(), description: obj.desc }));
 		return { body: result, statusCode: response.statusCode };

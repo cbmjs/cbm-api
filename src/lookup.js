@@ -28,7 +28,7 @@ export default async function lookup(...args) {
 		try {
 			const response = await got(this.fullAddress_(path), { responseType: "json" });
 			switch (type) {
-				case "c":
+				case "c": {
 					result.body = {
 						name: response.body.name,
 						description: response.body.desc,
@@ -38,7 +38,9 @@ export default async function lookup(...args) {
 					};
 					result.statusCode = response.statusCode;
 					break;
-				case "f":
+				}
+
+				case "f": {
 					result.body = {
 						name: response.body.name,
 						description: response.body.desc,
@@ -51,7 +53,9 @@ export default async function lookup(...args) {
 					};
 					result.statusCode = response.statusCode;
 					break;
-				case "r":
+				}
+
+				case "r": {
 					result.body = {
 						name: response.body.name,
 						description: response.body.desc,
@@ -63,14 +67,18 @@ export default async function lookup(...args) {
 					};
 					result.statusCode = response.statusCode;
 					break;
+				}
+
 				default:
 			}
 		} catch (error) {
 			result.body = { String: "Couldn’t find that in DB." }; // Keep convention that always an object is returned.
 			result.statusCode = error.response.statusCode;
 		}
+
 		return result;
 	}
+
 	const pathC = this.fullAddress_(`/gbn/c/${String(encodeURIComponent(uri))}`);
 	const pathF = this.fullAddress_(`/gbn/f/${String(encodeURIComponent(uri))}`);
 	const pathR = this.fullAddress_(`/gbn/r/${String(encodeURIComponent(uri))}`);
@@ -85,6 +93,7 @@ export default async function lookup(...args) {
 		};
 		return { body: result, statusCode: response.statusCode };
 	} catch { /**/ }
+
 	try {
 		const response = await got(pathF, { responseType: "json" });
 		const result = {
@@ -99,6 +108,7 @@ export default async function lookup(...args) {
 		};
 		return { body: result, statusCode: response.statusCode };
 	} catch { /**/ }
+
 	try {
 		const response = await got(pathR, { responseType: "json" });
 		const result = {

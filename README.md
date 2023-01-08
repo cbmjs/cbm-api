@@ -2,14 +2,14 @@
 
 > Node.js interface to the cbmjs network server. For further information, consult the website of the server-side project: [cbm-engine](https://github.com/cbmjs/cbm-engine).
 
-[![build](https://img.shields.io/github/workflow/status/cbmjs/cbm-api/ci?style=for-the-badge&logo=github&label=)](https://github.com/cbmjs/cbm-api/actions) [![npm](https://img.shields.io/npm/v/@cbmjs/cbm-api.svg?style=for-the-badge)](https://www.npmjs.com/package/cbmjs/cbm-api) [![license](https://img.shields.io/github/license/cbmjs/cbm-api.svg?style=for-the-badge)](https://github.com/cbmjs/cbm-api/blob/master/LICENSE)
+[![build](https://badges.iamnapo.me/ci/cbmjs/cbm-api)](https://github.com/cbmjs/cbm-api/actions) [![npm](https://badges.iamnapo.me/npm/@cbmjs/cbm-api)](https://www.npmjs.com/package/@cbmjs/cbm-api)
 
 ## Introduction
 
-To require the module in a project, we can use the expression:
+To import the module in a project, we can use the expression:
 
 ```javascript
-const CallByMeaning = require("@cbmjs/cbm-api");
+import CallByMeaning from "@cbmjs/cbm-api";
 ```
 
 ## Getting Started
@@ -20,7 +20,7 @@ The module exports a single constructor which can be used to open an API connect
 const cbm = new CallByMeaning();
 ```
 
-In case that you are running your own copy of the cbmjs server, the constructor takes the hostname of the server as an optional argument. The default option evaluates to "[https://call-by-meaning.herokuapp.com](https://call-by-meaning.herokuapp.com/)".
+In case that you are running your own copy of the cbmjs server, the constructor takes the hostname of the server as an optional argument. The default option evaluates to "[https://call-by-meaning.onrender.com](https://call-by-meaning.onrender.com/)".
 
 ```javascript
 CallByMeaning(host);

@@ -15,6 +15,7 @@ export default async function ask(...args) {
 	if (nargs !== 1) {
 		throw new Error("Insufficient input arguments. Must provide a natural language query.");
 	}
+
 	if (!args[0]) {
 		return args[0];
 	}
@@ -29,9 +30,11 @@ export default async function ask(...args) {
 		if (entity.type === "inputConcepts") {
 			params.inputConcepts.push(entity.entity);
 		}
+
 		if (entity.type === "outputConcepts") {
 			params.outputConcepts.push(entity.entity);
 		}
 	}
+
 	return this.search(params);
 }

@@ -8,7 +8,7 @@ import ask from "./src/ask.js";
 
 export default class CallByMeaning {
 	constructor(host) {
-		this.host = "https://call-by-meaning.herokuapp.com";
+		this.host = "https://call-by-meaning.onrender.com";
 		if (host) this.host = String(host);
 		this.lookup = lookup;
 		this.getURI = getURI;
